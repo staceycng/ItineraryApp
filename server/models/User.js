@@ -1,5 +1,3 @@
-//Mongoose User model goes in here
-
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 

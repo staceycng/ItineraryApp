@@ -5,9 +5,9 @@ const mongoose = require("mongoose");
 
 const port = 3000;
 
-// server api routes
-const users = require('./router/users.js');
-const itinerary = require('./router/itinerary.js');
+// server api routers
+const users = require('./routers/users.js');
+const itinerary = require('./routers/itinerary.js');
 
 //mongo database URI string
 const db = require('../config/keys.js').mongo_uri;
@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
-
+// use your routers here
 app.use("/users", users);
 app.use("/itinerary", itinerary);
 
