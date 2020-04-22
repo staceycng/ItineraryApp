@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import SplashPage from './Splash-Page.jsx';
 import SignIn from './Sign-In.jsx';
 import Overlay from './Overlay.jsx';
+import SignUp from './Sign-Up.jsx';
 import {
     BrowserRouter as Router,
     Switch,
@@ -24,6 +25,11 @@ class App extends React.Component {
                         <Route path="/sign-in">
                             <SplashPage />
                             <SignIn />
+                            <Overlay />
+                        </Route>
+                        <Route path="/create-account">
+                            <SplashPage />
+                            <SignUp />
                             <Overlay />
                         </Route>
                         <Route path="/">

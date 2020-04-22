@@ -4,22 +4,65 @@ import {
     Switch,
     Route,
     Link
-  } from "react-router-dom";
+} from "react-router-dom";
+import { Button, Modal, Form, FormControl } from 'react-bootstrap';
+import { connect } from "react-redux";
 
-function SignIn(props){
+const mapDispatchToProps = (dispatch) => {
+    return {
+        signIn: () => dispatch(signIn())
+      };
+}
 
-    return(
-        <div className='sign-in modal'>
-                    <div className='default-text modal-header'>Sign In</div>
-                    <input className='input-form input-text' onFocus="this.value=''" type="text" id="name" name="name" defaultValue="Email address"></input>
-                    <input className='input-form input-text' type="text" id="password" name="password" defaultValue="Password"></input>
-                    <div className='checkbox-container'>
-                        <input className='check-box check' type="checkbox" id="keep-login" name="keep-login" value="keep-login"></input>
-                        <span className='check-box'>Keep me logged in</span>
-                        <div className='check-box' id ='forgot'>Forgot password?</div>
-                    </div>
+var ConnectedSignIn = (props) => {
+    var handleClick = (event) => {
+        event.preventDefault();
+        props.signIn();
+    }
+    
+    return (
+        <div className='account-modal'>
+            <Modal.Dialog {...props}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>Sign In</Modal.Title>
+                </Modal.Header>
+
+                <Modal.Body>
+                    <Form>
+                        <Form.Group controlId="formBasicEmail">
+                            <Form.Control type="email" placeholder="Enter email" />
+                        </Form.Group>
+
+                        <Form.Group controlId="formBasicPassword">
+                            <Form.Control type="password" placeholder="Password" />
+                        </Form.Group>
+                        <Form.Group controlId="formBasicCheckbox">
+                            <Form.Check type="checkbox" label="Remember me" />
+                        </Form.Group>
+                        <center>
+                        <Button onClick={handleClick} variant="success" type="submit" size="sm" block>
+                            Submit
+                        </Button>
+                        <Button variant="primary" type="submit" size="sm" block>
+                            Sign in with Facebook
+                        </Button>
+                        </center>
+                    </Form>
+                </Modal.Body>
+
+                <Modal.Footer>
+                    <Form.Text className="text-muted">
+                        Don't have an account? <Link to="/create-account">Sign up here!</Link>
+                    </Form.Text>
+                </Modal.Footer>
+            </Modal.Dialog>
         </div>
     )
 }
+
+var SignIn = connect(null, mapDispatchToProps)(ConnectedSignIn);
 
 export default SignIn;

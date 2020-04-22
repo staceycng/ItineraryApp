@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Glegoo:wght@400;700&family=Vampiro+One&display=swap');
+@import url("https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css");
+@import './custom.css';
 $logo-color: rgb(0, 153, 204);
 $logo-font: 'Vampiro One', cursive;
 $body-font: 'Glegoo', serif;
@@ -21,7 +23,7 @@ $body-font-color: rgb(96, 95, 94);
 
 #header{
     display: flex;
-    height: 80px;
+    height: 90px;
     background-color: white;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -88,26 +90,16 @@ $body-font-color: rgb(96, 95, 94);
     width: 100%;
 }
 
-.modal{
-    text-align: center;
+.account-modal{
     position: absolute;
-    border-radius: 5px;
     z-index: 5;
-    top: 25%;
-    left: 25%;
-    width: 300px;
-    height: fit-content;
-    padding: 15px;
-    background-color: white;
+    left: 50%;
+    margin-left: -150px;
 }
 
-.modal-header{
-    font-size: 24px;
-}
-
-.input-form{
-    height: 50px;
-    width: 100%;
-    margin-left: 5px;
-    border-radius: 5px;
+.header-signed-in{
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+    text-align: center;
 }
