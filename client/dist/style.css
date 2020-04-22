@@ -1,0 +1,109 @@
+@import url("https://fonts.googleapis.com/css2?family=Glegoo:wght@400;700&family=Vampiro+One&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#app {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+#header {
+  display: flex;
+  height: 80px;
+  background-color: white;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+.default-text {
+  font-family: "Glegoo", serif;
+  color: #605f5e;
+}
+
+.logo {
+  color: #0099cc;
+  font-family: "Vampiro One", cursive;
+  font-size: 50px;
+}
+
+.icons {
+  display: flex;
+  position: absolute;
+  right: 10px;
+}
+
+.header-button {
+  font-family: "Glegoo", serif;
+  padding-right: 20px;
+  padding-top: 20px;
+  font-size: 20px;
+}
+
+.page-body {
+  flex-grow: 1;
+  background-color: #3694f7;
+  display: flex;
+  flex-direction: row;
+}
+
+.page-body-text {
+  color: white;
+  font-family: "Glegoo", serif;
+  width: 50%;
+  text-align: right;
+  position: relative;
+  top: 25%;
+  left: 40%;
+}
+
+.page-body-heading {
+  font-weight: bold;
+  font-size: 70px;
+}
+
+.page-body-caption {
+  font-size: 30px;
+}
+
+.full-overlay {
+  position: absolute;
+  z-index: 1;
+  background-color: black;
+  opacity: 30%;
+  height: 100%;
+  width: 100%;
+}
+
+.modal {
+  text-align: center;
+  position: absolute;
+  border-radius: 5px;
+  z-index: 5;
+  top: 25%;
+  left: 25%;
+  width: 300px;
+  height: fit-content;
+  padding: 15px;
+  background-color: white;
+}
+
+.modal-header {
+  font-size: 24px;
+}
+
+.input-form {
+  height: 50px;
+  width: 100%;
+  margin-left: 5px;
+  border-radius: 5px;
+}
+
+/*# sourceMappingURL=style.css.map */
