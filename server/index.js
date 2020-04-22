@@ -6,9 +6,9 @@ const mongoose = require("mongoose");
 const port = 3000;
 
 // server api routes
-const users = require('./router/users.js');
-const itinerary = require('./router/itinerary.js');
-const yelp = require('./router/yelp.js');
+const users = require('./routers/users.js');
+const itinerary = require('./routers/itinerary.js');
+const yelp = require('./routers/yelp.js');
 
 //mongo database URI string
 const db = require('../config/keys.js').mongo_uri;
