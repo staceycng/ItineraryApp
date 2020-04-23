@@ -1,7 +1,14 @@
 import React from 'react';
 import { Form, Button, InputGroup, FormControl } from 'react-bootstrap';
+import { connect } from "react-redux";
 
-class EventWizard2 extends React.Component {
+const mapDispatchToProps = (dispatch) => {
+    return{
+        saveItinerary: (payload) => dispatch(saveItinerary(payload))
+    };
+};
+
+class ConnectedEventWizard2 extends React.Component {
     constructor(props){
         super(props);
         this.state = {
@@ -9,6 +16,8 @@ class EventWizard2 extends React.Component {
         }
         this.handleShare = this.handleShare.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
+        this.handleSave = this.handleSave.bind(this);
+        this.handleNext = this.handleNext.bind(this);
     }
 
     handleShare(event){
@@ -34,6 +43,19 @@ class EventWizard2 extends React.Component {
         })
     }
 
+    // Send current state to store
+    handleNext(event){
+        event.preventDefault();
+        console.log('Handling next-->', this.props);
+        var payload = this.state;
+        this.props.saveItinerary(payload);
+    }
+
+    // Send current state to store, send from store to database
+    handleSave(){
+
+    }
+
     render(){
         var collaborators = this.state.collaborators;
         console.log('state--->', this.state.collaborators);
@@ -56,9 +78,12 @@ class EventWizard2 extends React.Component {
                     ))}
                     </div>
                     <div className='form-item form-button'>
-                        <Button variant="success" type="submit">
+                        <Button variant="light" type="submit">
+                            Save Progress
+                        </Button>
+                        <Button variant="success" type="submit" onClick={this.handleNext}>
                             Onward!
-                    </Button>
+                        </Button>
                     </div>
                 </Form>
             </div>
@@ -66,4 +91,5 @@ class EventWizard2 extends React.Component {
     }
 }
 
+var EventWizard2 = connect(null, mapDispatchToProps)(ConnectedEventWizard2);
 export default EventWizard2;

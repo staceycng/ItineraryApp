@@ -1,4 +1,4 @@
-import {  } from '../constants/action-types';
+import { SAVE_ITIN  } from '../constants/action-types';
 
 const initialState = {
     itinerary: null,
@@ -7,7 +7,15 @@ const initialState = {
 };
   
   function itineraryReducer(state = initialState, action) {
-    
+    // Add payload of current itinerary to itinerary state object
+    if(action.type === SAVE_ITIN){
+        var itinerary = {};
+        for(var keys in action.payload){
+            itinerary[keys] = action.payload[keys]
+        }
+        var newItin = Object.assign(itinerary, state.itinerary);
+        return Object.assign({}, state, {itinerary: newItin});
+    }
     return state;
   };
   
