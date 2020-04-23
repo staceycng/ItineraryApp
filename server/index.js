@@ -3,7 +3,7 @@ let path = require('path');
 let app = express();
 const mongoose = require("mongoose");
 
-const port = 3000;
+const port = process.env.port || 3000;
 
 // server api routes
 const users = require('./routers/users.js');
