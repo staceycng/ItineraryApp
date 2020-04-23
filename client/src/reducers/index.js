@@ -1,9 +1,18 @@
 import { combineReducers } from 'redux';
-import { credentialsStatus } from  './credentials.js'
+import { SIGN_IN } from '../constants/action-types';
+import auth from './auth.js';
+import itinerary from './itinerary.js';
 
+const initialState = {
+    credentials: 'NOT_LOGGED_IN'
+};
 
-export default combineReducers({
-    credentialsStatus
+const rootReducer = combineReducers({
+    auth,
+    itinerary
 });
+
+export default rootReducer;
+
 
 

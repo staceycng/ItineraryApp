@@ -1,13 +1,12 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import App from './components/App.jsx';
-import { Provider } from 'react-redux'
-import { createStore } from 'redux'
-import rootReducer from './reducers/index.js'
+import store from './store/index.js';
+import { signIn } from './actions/index.js';
+import { Provider } from "react-redux";
 
-const initialState = { 
-    credentialsStatus: 'NOT_LOGGED_IN'
-};
+window.store = store;
+window.signIn = signIn;
 
-const store = createStore(rootReducer, initialState);
-ReactDom.render(<Provider store={store}><App /></Provider>, document.getElementById('app'));
+
+ReactDom.render(<Provider store={store}><App /> </Provider>, document.getElementById('app'));

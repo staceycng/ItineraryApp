@@ -1,4 +1,5 @@
-export const credentials = {
-    LOGGED_IN: 'LOGGED_IN',
-    NOT_LOGGED_IN: 'NOT_LOGGED_IN'
-  }
+import { SIGN_IN } from '../constants/action-types'
+
+export function signIn() {
+  return { type: SIGN_IN }
+};
