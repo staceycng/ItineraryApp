@@ -22,6 +22,8 @@ $body-font-color: rgb(96, 95, 94);
 }
 
 #header{
+    width: 100%;
+    position: fixed;
     display: flex;
     height: 90px;
     background-color: white;
@@ -29,6 +31,7 @@ $body-font-color: rgb(96, 95, 94);
     padding-bottom: 10px;
     padding-right: 20px;
     padding-left: 20px;
+    z-index: 1;
 }
 
 .default-text{
@@ -56,6 +59,7 @@ $body-font-color: rgb(96, 95, 94);
 }
 
 .page-body{
+    margin-top: 90px;
     flex-grow: 1;
     background-color: $body-color;
     display: flex;
@@ -102,4 +106,48 @@ $body-font-color: rgb(96, 95, 94);
     flex-direction: column;
     font-size: 16px;
     text-align: center;
+}
+
+#event-wizard{
+    display: flex;
+    flex-direction: column;
+    font-family: $body-font;
+    width: 100%;
+    height: max-content;
+    background-color: $body-color;
+    margin-top: 90px;
+    align-items: center;
+}
+
+.e-w{
+    // background-color: $body-color;
+    height: 100vh;
+    width: 30%;
+    padding-top: 10%;
+    padding-left: 30px;
+    padding-right: 30px;
+    color: white;
+
+}
+
+.form-item{
+    margin-bottom: 50px;
+}
+
+.form-button{
+    text-align: right;
+}
+
+.collab-item{
+    background-color: white;
+    padding: 5px;
+    padding-left: 10px;
+    border-radius: 5px;
+    color: $body-font-color;
+    margin-bottom: 10px;
+}
+
+.collab-delete{
+    float: right;
+    padding-right: 10px;
 }

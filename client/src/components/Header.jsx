@@ -8,7 +8,7 @@ import {
 import { connect } from "react-redux";
 
 const mapStateToProps = state => {
-    return { credentials: state.credentials };
+    return { credentials: state.auth.credentials };
 };
 
 function ConnectedHeader({ credentials }){
@@ -38,18 +38,18 @@ function ConnectedHeader({ credentials }){
                 </div>
                 <div className='icons'>
                     <div className='header-button header-signed-in'>
-                        <Link to="/sign-in" style={{ textDecoration: 'none' }}>
+                        <Link to="/create-new" style={{ textDecoration: 'none' }}>
                             <i class="fas fa-plus-circle"></i>
                         </Link>
-                        <Link to="/sign-in" style={{ textDecoration: 'none' }}>
+                        <Link to="/create-new" style={{ textDecoration: 'none' }}>
                             <span>Create New Itinerary</span>
                         </Link>
                     </div>
                     <div className='header-button header-signed-in'>
-                        <Link to="/create-account" style={{ textDecoration: 'none' }}>
+                        <Link to="/view-existing" style={{ textDecoration: 'none' }}>
                             <i class="fas fa-mountain"></i>
                         </Link>
-                        <Link to="/create-account" style={{ textDecoration: 'none' }}>See My Itineraries</Link>
+                        <Link to="/view-existing" style={{ textDecoration: 'none' }}>See My Itineraries</Link>
                     </div>
                 </div>
             </div>

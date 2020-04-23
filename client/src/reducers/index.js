@@ -1,19 +1,18 @@
-import { SIGN_IN, OVERLAY } from '../constants/action-types';
+import { combineReducers } from 'redux';
+import { SIGN_IN } from '../constants/action-types';
+import auth from './auth.js';
+import itinerary from './itinerary.js';
 
 const initialState = {
     credentials: 'NOT_LOGGED_IN'
-  };
-  
-  function rootReducer(state = initialState, action) {
-    if(action.type === SIGN_IN){
-        return Object.assign({}, state, {
-            credentials: 'LOGGED_IN'
-          });
-    }
-    return state;
-  };
-  
-  export default rootReducer;
-  
+};
+
+const rootReducer = combineReducers({
+    auth,
+    itinerary
+});
+
+export default rootReducer;
+
 
 

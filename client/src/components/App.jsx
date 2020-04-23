@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import SplashPage from './Splash-Page.jsx';
 import SignIn from './Sign-In.jsx';
 import SignUp from './Sign-Up.jsx';
+import EventWizard from './Event-Wizard.jsx';
 import {
     BrowserRouter as Router,
     Switch,
@@ -34,6 +35,9 @@ class App extends React.Component {
                         <Route path="/create-account">
                             <SplashPage />
                             <SignUp />
+                        </Route>
+                        <Route path="/create-new">
+                            <EventWizard />
                         </Route>
                         <Route path="/">
                             <SplashPage />

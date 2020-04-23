@@ -47,14 +47,14 @@ class SignUp extends React.Component {
                             <Form.Group controlId="formBasicEmail">
                                 <Form.Control size='sm' type="name" placeholder="First and Last Name" />
                             </Form.Group>
+                            <Form.Group controlId="formBasicUserName">
+                                <Form.Control size='sm' type="text" placeholder="Username" />
+                            </Form.Group>
                             <Form.Group controlId="formBasicEmail">
                                 <Form.Control size='sm' type="email" placeholder="Email" />
                             </Form.Group>
                             <Form.Group controlId="formBasicPassword">
                                 <Form.Control size='sm' type="password" placeholder="Password" />
-                            </Form.Group>
-                            <Form.Group controlId="formBasicPhoneNumber">
-                                <Form.Control size='sm' type="phone" placeholder="Phone Number: (123)456-7890" />
                             </Form.Group>
                             <center>
                                 <Button variant="success" type="submit" size="sm" block onClick={this.close}>

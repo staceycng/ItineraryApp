@@ -13,7 +13,7 @@ function SplashPage(props){
 
     return(
         <div>
-            <Header redirect={props.redirect}/>
+            <Header />
             <SplashDisplay />
         </div>
     )
