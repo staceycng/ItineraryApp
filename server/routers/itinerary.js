@@ -36,16 +36,31 @@ router.post("/", (req, res) => {
     }
 });
 
+//@route   PUT itinerary/
+//@desc    Updates an existing  itinerary
+//@access  Private
+router.post("/:id", (req, res) => {
+    let { errors, isValid } = validateItineraryInput(req.body);
+
+    if (!isValid) {
+        res.status(400).send(errors);
+    } else {
+        Itinerary.update({user: req.user.id, _id: req.params.id}, req.body).then(result => {
+            res.status(200).send(result);
+        })
+    }
+});
+
 //@route   DELETE itinerary/:id
 //@desc    Deletes an itinerary by its ID
 //@access  Private
 router.delete("/:id", (req, res) => {
-    Itinerary.deleteOne({_id: req.params.id, user: req.user.id}).then(result => {
+    Itinerary.deleteOne({ _id: req.params.id, user: req.user.id }).then(result => {
         res.status(200).send(result);
     })
-    .catch(err => {
-        res.status(400).send(err);
-    })
+        .catch(err => {
+            res.status(400).send(err);
+        })
 });
 
 //@route   POST itinerary/event
@@ -76,8 +91,8 @@ router.post("/event/:id", (req, res) => {
 //@access  Private
 router.delete("/event/:id/:event_id", (req, res) => {
     Itinerary.update({ user: req.user.id, _id: req.params.id }, { $pull: { events: req.params.event_id } })
-            .then(result => res.status(200).send(result))
-            .catch(err => res.status(400).send(err));
+        .then(result => res.status(200).send(result))
+        .catch(err => res.status(400).send(err));
 });
 
 module.exports = router;
