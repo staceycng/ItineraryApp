@@ -1,10 +1,24 @@
-import React from 'react';
+// import React from 'react';
+// import { connect } from "react-redux";
 
-function Modal(props){
+// const mapStateToProps = state => {
+//     return { overlay: state.overlay };
+//  };
 
-    return(
-        <div className='full-overlay'></div>
-    )
-}
+// function ConnectedModal({ overlay }){
+//     if(overlay){
+//         return(
+//             // <div className='full-overlay'></div>
+//             <div></div>
+//         )
+//     }
+//     else{
+//         return(
+//             <div></div>
+//         )
+//     }
+// }
 
-export default Modal;
+// const Modal = connect(mapStateToProps)(ConnectedModal);
+
+// export default Modal;

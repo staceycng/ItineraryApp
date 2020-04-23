@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import SplashPage from './Splash-Page.jsx';
 import SignIn from './Sign-In.jsx';
-import Overlay from './Overlay.jsx';
 import SignUp from './Sign-Up.jsx';
 import {
     BrowserRouter as Router,
@@ -15,6 +14,12 @@ import {
 class App extends React.Component {
     constructor(props) {
         super(props);
+        this.redirect = this.redirect.bind(this);
+    }
+
+    redirect(route){
+        var path = `/${route}`;
+        return <Redirect to={path} />
     }
 
     render() {
@@ -23,14 +28,12 @@ class App extends React.Component {
                 <Router>
                     <Switch>
                         <Route path="/sign-in">
-                            <SplashPage />
+                            <SplashPage redirect={this.redirect}/>
                             <SignIn />
-                            <Overlay />
                         </Route>
                         <Route path="/create-account">
                             <SplashPage />
                             <SignUp />
-                            <Overlay />
                         </Route>
                         <Route path="/">
                             <SplashPage />

@@ -8,7 +8,7 @@ import {
 import { connect } from "react-redux";
 
 const mapStateToProps = state => {
-return { credentials: state.credentials };
+    return { credentials: state.credentials };
 };
 
 function ConnectedHeader({ credentials }){

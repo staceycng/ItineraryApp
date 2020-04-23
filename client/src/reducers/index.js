@@ -1,4 +1,4 @@
-import { SIGN_IN } from '../constants/action-types';
+import { SIGN_IN, OVERLAY } from '../constants/action-types';
 
 const initialState = {
     credentials: 'NOT_LOGGED_IN'
