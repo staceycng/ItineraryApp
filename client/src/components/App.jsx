@@ -4,13 +4,13 @@ import SplashPage from './Splash-Page.jsx';
 import SignIn from './Sign-In.jsx';
 import SignUp from './Sign-Up.jsx';
 import EventWizard from './Event-Wizard.jsx';
+import EventEditor from './Event-Editor.jsx';
 import {
     BrowserRouter as Router,
     Switch,
     Route,
     Link
 } from "react-router-dom";
-
 
 
 // Check for token
@@ -64,6 +64,9 @@ class App extends React.Component {
                         </Route>
                         <Route path="/create-new">
                             <EventWizard />
+                        </Route>
+                        <Route path="/event-editor">
+                            <EventEditor />
                         </Route>
                         <Route path="/">
                             <SplashPage />
