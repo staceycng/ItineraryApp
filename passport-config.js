@@ -34,7 +34,7 @@ const issueToken = (user) => {
     }
 }
 module.exports.issueToken = issueToken
-module.exports.passportStrat = (passport) => {
+module.exports.customStrategy = (passport) => {
     passport.use(new JwtStrategy(options, (payload, done) => {
         //might change from _id to email
         User.findOne({ _id: payload.id })
