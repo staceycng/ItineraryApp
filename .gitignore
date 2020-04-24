@@ -5,5 +5,7 @@ package.json
 package-lock.json
 client/dist/bundle.js
 
+/privateKey.pem
+
 package.json.3511403573
 package-lock.json.2677337080
