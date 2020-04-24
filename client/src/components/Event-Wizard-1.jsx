@@ -7,7 +7,8 @@ import { connect } from "react-redux";
 
 const mapDispatchToProps = (dispatch) => {
     return{
-        saveItinerary: (payload) => dispatch(saveItinerary(payload))
+        saveItinerary: (payload) => dispatch(saveItinerary(payload)),
+        saveItineraryDB: (payload) => dispatch(saveItineraryDB(payload))
     };
 };
 
@@ -19,7 +20,7 @@ class ConnectedEventWizard1 extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            title: null,
+            name: null,
             date: null
         }
         this.handleDateChange = this.handleDateChange.bind(this);
@@ -44,16 +45,15 @@ class ConnectedEventWizard1 extends React.Component {
     }
 
     handleTitleChange(event){
-        var title = event.target.value;
+        var name = event.target.value;
         this.setState({
-            title: title
+            name: name
         });
     }
 
     // Send current state to store
     handleNext(event){
         event.preventDefault();
-        console.log('Handling next-->', this.props);
         var payload = this.state;
         this.props.saveItinerary(payload);
     }
@@ -62,10 +62,11 @@ class ConnectedEventWizard1 extends React.Component {
     handleSave(event){
         event.preventDefault();
         var saved = this.props.itinerary;
-
         // If nothing has been saved to the store or store has not been sent to DB
-        if((saved === null) | (!saved._id)){
+        if((saved === null) || (!(saved._id))){
             // Save state to store & send info to DB
+            var payload = this.state;
+            this.props.saveItineraryDB(payload);
         }
         
     }
