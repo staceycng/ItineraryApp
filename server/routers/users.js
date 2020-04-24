@@ -35,7 +35,7 @@ router
     })
 
 router
-    .route('/signin')
+    .route('/login')
     .post((req, res) => {
         res.status(200).send('Signed in!');
 
