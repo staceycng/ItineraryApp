@@ -26,7 +26,6 @@ router
                             res.status(400).send({ errorMessage: `The following username already exits: ${err.keyValue.username}` })
                         } else {
                             res.status(400).send(err)
-
                         }
                     })
             })
