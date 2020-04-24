@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const Itinerary = require('../models/Itinerary.js');
+const passport = require('passport')
 
 //Input validators
 const validateItineraryInput = require('../validation/itinerary.js');
 const validateEventInput = require('../validation/event.js');
 
-router.get("/test", (req, res) => {
+router.get("/test", passport.authenticate('jwt', { session: false }), (req, res) => {
     res.status(200).send("test itinerary route");
 });
 
@@ -45,7 +46,7 @@ router.post("/:id", (req, res) => {
     if (!isValid) {
         res.status(400).send(errors);
     } else {
-        Itinerary.update({user: req.user.id, _id: req.params.id}, req.body).then(result => {
+        Itinerary.update({ user: req.user.id, _id: req.params.id }, req.body).then(result => {
             res.status(200).send(result);
         })
     }
@@ -56,8 +57,8 @@ router.post("/:id", (req, res) => {
 //@access  Private
 router.delete("/:id", (req, res) => {
     Itinerary.deleteOne({ _id: req.params.id, user: req.user.id }).then(result => {
-        res.status(200).send(result);
-    })
+            res.status(200).send(result);
+        })
         .catch(err => {
             res.status(400).send(err);
         })

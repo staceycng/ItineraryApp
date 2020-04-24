@@ -2,7 +2,9 @@ const express = require('express');
 const router = express.Router();
 const fetch = require('node-fetch')
 const { Headers } = require('node-fetch')
+const passport = require('passport')
 require('dotenv').config()
+
 
 const yelp_url = 'https://api.yelp.com/v3'
 
@@ -17,8 +19,8 @@ const options = {
 //////////////////////////////////////
 //exQuery: ?categories=music,film&limit=5&location=las%20vegas&is_free=true
 router
-    .route('/events')
-    .get(async(req, res) => {
+    .route('/events', passport.authenticate('jwt', { session: false }))
+    .get(passport.authenticate('jwt', { session: false }), async(req, res) => {
         await fetch(`${yelp_url}/events?${req._parsedUrl.query}`, options)
             .then((apiResponse) => apiResponse.json())
             .then((data) => res.status(200).send(data))
@@ -33,7 +35,7 @@ router
 //exId: oakland-saucy-oakland-restaurant-pop-up
 router
     .route('/events/:id')
-    .get(async(req, res) => {
+    .get(passport.authenticate('jwt', { session: false }), async(req, res) => {
         await fetch(`${yelp_url}/events/${req.params.id}`, options)
             .then((apiResponse) => apiResponse.json())
             .then((data) => res.status(200).send(data))
@@ -46,7 +48,7 @@ router
 //exQuery: ?categories=Restaurants%20&limit=5&location=las%20vegas&term=fun
 router
     .route('/businesses/search')
-    .get(async(req, res) => {
+    .get(passport.authenticate('jwt', { session: false }), async(req, res) => {
         await fetch(`${yelp_url}/businesses/search?${req._parsedUrl.query}`, options)
             .then((apiResponse) => apiResponse.json())
             .then((data) => res.status(200).send(data))
@@ -59,7 +61,7 @@ router
 //exId: E8RJkjfdcwgtyoPMjQ_Olg
 router
     .route('/businesses/:id')
-    .get(async(req, res) => {
+    .get(passport.authenticate('jwt', { session: false }), async(req, res) => {
         await fetch(`${yelp_url}/businesses/${req.params.id}`, options)
             .then((apiResponse) => apiResponse.json())
             .then((data) => res.status(200).send(data))
