@@ -34,6 +34,7 @@ class ConnectedSignIn extends React.Component {
         }
         console.log('Closing!');
         this.setState({ showModal: false });
+        
     };
 
     open() {

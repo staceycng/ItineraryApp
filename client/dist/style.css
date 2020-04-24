@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Glegoo:wght@400;700&family=Vampiro+One&display=swap");
 @import url("https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css");
 @import './custom.css';
+@import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 * {
   margin: 0;
   padding: 0;
