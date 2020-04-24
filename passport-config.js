@@ -5,8 +5,8 @@ const JwtStrategy = require('passport-jwt').Strategy
 const { ExtractJwt } = require('passport-jwt')
 const jsonwebtoken = require('jsonwebtoken');
 
-const PUB_KEY = fs.readFileSync(path.join(__dirname, 'publicKey.pem'), 'utf8')
-const PRIV_KEY = fs.readFileSync(path.join(__dirname, 'privateKey.pem'), 'utf8', 'utf8');
+const PUB_KEY = fs.readFileSync(path.join(__dirname, '/config/publicKey.pem'), 'utf8')
+const PRIV_KEY = fs.readFileSync(path.join(__dirname, '/config/privateKey.pem'), 'utf8', 'utf8');
 
 const options = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -15,13 +15,16 @@ const options = {
 
 
 const issueToken = (user) => {
-    const _id = user._id
+    const { _id, username, name, email } = user
 
     const expiresIn = '1d'
 
     const payload = {
-        sub: _id,
-        iat: Date.now()
+        id: _id,
+        iat: Date.now(),
+        name: name,
+        username: username,
+        email: email
     }
     const signedToken = jsonwebtoken.sign(payload, PRIV_KEY, { expiresIn: expiresIn, algorithm: 'RS256' });
 
@@ -34,7 +37,7 @@ module.exports.issueToken = issueToken
 module.exports.passportStrat = (passport) => {
     passport.use(new JwtStrategy(options, (payload, done) => {
         //might change from _id to email
-        User.findOne({ _id: payload.sub })
+        User.findOne({ _id: payload.id })
             .then((user) => {
                 user ? done(null, user) : done(null, false)
             })

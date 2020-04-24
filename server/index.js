@@ -2,6 +2,9 @@ let express = require('express');
 let path = require('path');
 let app = express();
 const mongoose = require("mongoose");
+const passport = require('passport')
+const { passportStrat } = require('../passport-config')
+
 
 const port = process.env.port || 3000;
 
@@ -12,6 +15,10 @@ const yelp = require('./routers/yelp.js');
 
 //mongo database URI string
 const db = require('../config/keys.js').mongo_uri;
+
+//passport configuration and initialization
+passportStrat(passport)
+app.use(passport.initialize());
 
 
 app.use(express.json());
