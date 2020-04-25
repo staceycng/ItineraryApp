@@ -3,8 +3,10 @@ let path = require('path');
 let app = express();
 const mongoose = require("mongoose");
 const passport = require('passport')
-const { passportStrat } = require('../passport-config')
-
+const { customStrategy } = require('../passport-config')
+const FacebookStrategy = require('passport-facebook')
+var https = require('https')
+var fs = require('fs')
 
 const port = process.env.port || 3000;
 
@@ -12,12 +14,13 @@ const port = process.env.port || 3000;
 const users = require('./routers/users.js');
 const itinerary = require('./routers/itinerary.js');
 const yelp = require('./routers/yelp.js');
+const facebook = require('./routers/facebook.js')
 
 //mongo database URI string
 const db = require('../config/keys.js').mongo_uri;
 
 //passport configuration and initialization
-passportStrat(passport)
+customStrategy(passport)
 app.use(passport.initialize());
 
 
@@ -29,22 +32,54 @@ app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use("/users", users);
 app.use("/itinerary", itinerary);
 app.use("/yelp", yelp);
+app.use("/facebook", facebook);
+
 
 
 
 mongoose
     .connect(db, {
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
+        useCreateIndex: true
     })
     .then(() => console.log("MongoDB Connected"))
     .catch(err => console.log(err));
 
 
+var certOptions = {
+    key: fs.readFileSync(path.resolve('config/server.key')),
+    cert: fs.readFileSync(path.resolve('config/server.crt'))
+}
+
+/**
+ * -----------Unsecure server--------------
+ */
+
 app.listen(port, (err) => {
     if (err) {
         console.log(err);
     } else {
-        console.log(`Server is listening on port ${port}`);
+        console.log(`Unsecured Server is listening on port ${port}`);
     }
 })
+
+
+/**
+ * -----------Secure server--------------
+ */
+// https.createServer(certOptions, app)
+//     .listen(port, () => console.log(`Secured Server is listening on port ${port}`))
+
+
+
+
+
+/**
+ * ---How to set up ssl certificate for localhost---
+ */
+//https://www.freecodecamp.org/news/how-to-get-https-working-on-your-local-development-environment-in-5-minutes-7af615770eec/
+/**
+ * ---import rootCA for pc---
+ */
+//https://www.sslsupportdesk.com/how-to-enable-or-disable-all-puposes-of-root-certificates-in-mmc/

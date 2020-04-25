@@ -14,8 +14,6 @@ router.get("/test", passport.authenticate('jwt', { session: false }), (req, res)
 router
     .route('/create')
     .post(async(req, res) => {
-        // console.log(req.body)
-        // res.send(req.body)
         try {
             await bcrypt.hash(req.body.password, 10, (err, hash) => {
                 if (err) {
@@ -29,9 +27,9 @@ router
                     })
                     .catch(err => {
                         if (err.keyValue.email) {
-                            res.status(400).send({ errorMessage: `The following email already exits: ${err.keyValue.email}` })
+                            res.status(400).send({ errorMessage: `The following email already exists: ${err.keyValue.email}.  If Facebook account was used to create account, please select Facebook Login` })
                         } else if (err.keyValue.username) {
-                            res.status(400).send({ errorMessage: `The following username already exits: ${err.keyValue.username}` })
+                            res.status(400).send({ errorMessage: `The following username already exists: ${err.keyValue.username}` })
                         } else {
                             res.status(400).send(err)
                         }
@@ -45,6 +43,9 @@ router
 router
     .route('/login')
     .post((req, res) => {
+        if (req.user) {
+            res.status(200).send(req.user);
+        }
         const { email, password } = req.body
         User.findOne({ email })
             .then(async(user) => {
