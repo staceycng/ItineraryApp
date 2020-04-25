@@ -72,11 +72,9 @@ class ConnectedEventWizard2 extends React.Component {
     // Send current state to store
     handleNext(event) {
         event.preventDefault();
-        console.log('Handling next-->', this.props);
         var payload = this.state;
         payload.user = this.props.user.id;
         this.props.saveItinerary(payload);
-        console.log('props--->', this.props);
         this.props.history.push('/event-editor');
     }
 

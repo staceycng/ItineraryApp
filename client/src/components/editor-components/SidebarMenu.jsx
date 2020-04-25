@@ -42,19 +42,22 @@ class SidebarMenu extends React.Component {
                         <Accordion.Collapse eventKey="2">
                             <Card.Body>
                                 <Form>
-                                    <Form.Control className ="c-e-f" type="text" placeholder="Event Title" />
+                                    <Form.Control className="c-e-f" type="text" placeholder="Event Title" />
                                     <Row>
                                         <Col>
-                                            <Form.Control className ="c-e-f" placeholder="Location" />
+                                            <Form.Control className="c-e-f" placeholder="Location" />
                                         </Col>
                                         <Col>
-                                            <TimePicker className ="c-e-f" start="0:00" end="23:59" step={30} />
+                                            <TimePicker className="c-e-f" start="0:00" end="23:59" step={30} />
                                         </Col>
                                     </Row>
                                     <Form.Group controlId="exampleForm.ControlTextarea1">
-                                        <Form.Control className ="c-e-f" placeholder="Notes/Description (Optional)" as="textarea" rows="3" />
+                                        <Form.Control className="c-e-f" placeholder="Notes/Description (Optional)" as="textarea" rows="3" />
                                     </Form.Group>
                                 </Form>
+                                <Button variant="success" type="submit" onClick={this.handleNext}>
+                                    Add!
+                            </Button>
                             </Card.Body>
                         </Accordion.Collapse>
                     </Card>
