@@ -29,9 +29,9 @@ router
                     })
                     .catch(err => {
                         if (err.keyValue.email) {
-                            res.status(400).send({ errorMessage: `The following email already exits: ${err.keyValue.email}` })
+                            res.status(400).send({ errorMessage: `The following email already exists: ${err.keyValue.email}` })
                         } else if (err.keyValue.username) {
-                            res.status(400).send({ errorMessage: `The following username already exits: ${err.keyValue.username}` })
+                            res.status(400).send({ errorMessage: `The following username already exists: ${err.keyValue.username}` })
                         } else {
                             res.status(400).send(err)
                         }
