@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from "react-router-dom";
 import {
     BrowserRouter as Router,
     Switch,
@@ -7,21 +9,51 @@ import {
 } from "react-router-dom";
 import { Button, Modal, Form, FormControl } from 'react-bootstrap';
 
+import { registerUser } from '../actions/auth.js';
+
 class SignUp extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            showModal: true
+            showModal: true,
+            name: "",
+            username: "",
+            email: "",
+            password: ""
         }
         this.close = this.close.bind(this);
     }
+
+
+    onChange = (event) => {
+        this.setState({ [event.target.name]: event.target.value });
+        //console.log(this.state[event.target.name]);
+    }
+
+    onSubmit = (event) => {
+        event.preventDefault();
+        const { name, username, email, password } = this.state;
+
+        if (name && username && email && password) {
+            const newUser = {
+                name,
+                username,
+                email,
+                password
+            }
+            this.setState({ showModal: false });
+            this.props.registerUser(newUser, this.props.history);
+        }
+
+    }
+
 
     getInitialState() {
         return { showModal: false };
     };
 
     close(event) {
-        if(event){
+        if (event) {
             event.preventDefault();
         }
         this.setState({ showModal: false });
@@ -45,19 +77,19 @@ class SignUp extends React.Component {
                     <Modal.Body>
                         <Form>
                             <Form.Group controlId="formBasicEmail">
-                                <Form.Control size='sm' type="name" placeholder="First and Last Name" />
+                                <Form.Control size='sm' name="name" type="name" placeholder="First and Last Name" onChange={this.onChange} />
                             </Form.Group>
                             <Form.Group controlId="formBasicUserName">
-                                <Form.Control size='sm' type="text" placeholder="Username" />
+                                <Form.Control size='sm' name="username" type="text" placeholder="Username" onChange={this.onChange} />
                             </Form.Group>
                             <Form.Group controlId="formBasicEmail">
-                                <Form.Control size='sm' type="email" placeholder="Email" />
+                                <Form.Control size='sm' name="email" type="email" placeholder="Email" onChange={this.onChange} />
                             </Form.Group>
                             <Form.Group controlId="formBasicPassword">
-                                <Form.Control size='sm' type="password" placeholder="Password" />
+                                <Form.Control size='sm' name="password" type="password" placeholder="Password" onChange={this.onChange} />
                             </Form.Group>
                             <center>
-                                <Button variant="success" type="submit" size="sm" block onClick={this.close}>
+                                <Button variant="success" type="submit" size="sm" block onClick={this.onSubmit}>
                                     Start Planning!
                             </Button>
                             </center>
@@ -78,4 +110,4 @@ class SignUp extends React.Component {
     }
 }
 
-export default SignUp;
+export default connect(null, { registerUser })(withRouter(SignUp));
