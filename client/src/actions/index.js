@@ -1,4 +1,4 @@
-import { SIGN_IN, SAVE_ITIN, SAVE_ITIN_DB } from '../constants/action-types'
+import { SIGN_IN, SAVE_ITIN, SAVE_ITIN_DB, GET_ITINS, ITIN_LOADING, CLEAR_CURRENT_ITIN } from '../constants/action-types'
 import axios from 'axios';
 
 export function signIn() {
@@ -49,3 +49,24 @@ export const saveItineraryDBById = (payload) => (dispatch, getState) => {
     console.log(err);
   })
 }
+
+
+// Get logged in users itineraries
+export const getItineraries = () => dispatch => {
+	
+	//dispatch(setItineraryLoading());
+	axios.get("/itinerary")
+	.then(res => 
+		dispatch({
+			type: GET_ITINS,
+			payload: res.data
+		})
+	)
+	.catch(err => 
+		dispatch({
+			type: GET_ITINS,
+			payload: {}
+		})
+	)
+}
+

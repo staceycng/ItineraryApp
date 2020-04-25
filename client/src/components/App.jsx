@@ -4,12 +4,39 @@ import SplashPage from './Splash-Page.jsx';
 import SignIn from './Sign-In.jsx';
 import SignUp from './Sign-Up.jsx';
 import EventWizard from './Event-Wizard.jsx';
+import EventEditor from './Event-Editor.jsx';
+import ViewExisting from './View-Existing.jsx';
 import {
     BrowserRouter as Router,
     Switch,
     Route,
     Link
-  } from "react-router-dom";
+} from "react-router-dom";
+
+
+// Check for token
+// if (localStorage.jwtToken) {
+//     // Set auth token header auth
+//     setAuthToken(localStorage.jwtToken);
+//     // Decode token and get user info and exp
+//     const decoded = jwt_decode(localStorage.jwtToken);
+//     // Set user and isAuthenticated
+//     window.store.dispatch(setCurrentUser(decoded));
+
+
+//     // Check for expired token
+//     const currentTime = Date.now() / 1000;
+//     if (decoded.exp < currentTime) {
+//         //Logout the user
+//         window.store.dispatch(logoutUser());
+//         //window.store.dispatch(clearCurrentProfile());
+
+//         //Redirect to login
+//         window.location.href = "/sign-in";
+//     }
+// }
+
+
 
 
 class App extends React.Component {
@@ -18,7 +45,7 @@ class App extends React.Component {
         this.redirect = this.redirect.bind(this);
     }
 
-    redirect(route){
+    redirect(route) {
         var path = `/${route}`;
         return <Redirect to={path} />
     }
@@ -29,7 +56,7 @@ class App extends React.Component {
                 <Router>
                     <Switch>
                         <Route path="/sign-in">
-                            <SplashPage redirect={this.redirect}/>
+                            <SplashPage redirect={this.redirect} />
                             <SignIn />
                         </Route>
                         <Route path="/create-account">
@@ -38,6 +65,12 @@ class App extends React.Component {
                         </Route>
                         <Route path="/create-new">
                             <EventWizard />
+                        </Route>
+                        <Route path="/event-editor">
+                            <EventEditor />
+                        </Route>
+                        <Route path="/view-existing">
+                            <ViewExisting />
                         </Route>
                         <Route path="/">
                             <SplashPage />

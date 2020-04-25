@@ -7,10 +7,11 @@ import {
 } from "react-router-dom";
 import { Button, Modal, Form, FormControl } from 'react-bootstrap';
 import { connect } from "react-redux";
+import { loginUser } from "../actions/auth.js";
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        signIn: () => dispatch(signIn())
+        loginUser: (user) => dispatch(loginUser(user))
     };
 }
 
@@ -18,7 +19,9 @@ class ConnectedSignIn extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            showModal: true
+            showModal: true,
+            email: "",
+            password: ""
         }
         this.close = this.close.bind(this);
         this.handleClick = this.handleClick.bind(this);
@@ -34,7 +37,7 @@ class ConnectedSignIn extends React.Component {
         }
         console.log('Closing!');
         this.setState({ showModal: false });
-        
+
     };
 
     open() {
@@ -43,8 +46,20 @@ class ConnectedSignIn extends React.Component {
 
     handleClick(event) {
         event.preventDefault();
-        this.props.signIn();
-        this.close();
+
+        const { email, password } = this.state;
+
+        if (email.trim() && password.trim()) {
+            this.props.loginUser({email, password});
+            this.close();
+        }
+
+
+    }
+
+    onChange = (event) => {
+        this.setState({ [event.target.name]: event.target.value });
+        //console.log(this.state[event.target.name]);
     }
 
     render() {
@@ -61,11 +76,11 @@ class ConnectedSignIn extends React.Component {
                     <Modal.Body>
                         <Form>
                             <Form.Group controlId="formBasicEmail">
-                                <Form.Control type="email" placeholder="Enter email" />
+                                <Form.Control name="email" type="email" placeholder="Enter email" onChange={this.onChange} />
                             </Form.Group>
 
                             <Form.Group controlId="formBasicPassword">
-                                <Form.Control type="password" placeholder="Password" />
+                                <Form.Control name="password" type="password" placeholder="Password" onChange={this.onChange} />
                             </Form.Group>
                             <Form.Group controlId="formBasicCheckbox">
                                 <Form.Check type="checkbox" label="Remember me" />
@@ -73,7 +88,7 @@ class ConnectedSignIn extends React.Component {
                             <center>
                                 <Button onClick={this.handleClick} variant="success" type="submit" size="sm" block>
                                     Submit
-                        </Button>
+                                </Button>
                                 <Button variant="primary" type="submit" size="sm" block>
                                     Sign in with Facebook
                         </Button>
@@ -86,7 +101,7 @@ class ConnectedSignIn extends React.Component {
                             Don't have an account? <Link to="/create-account">Sign up here!</Link>
                         </Form.Text>
                     </Modal.Footer>
-            </Modal>
+                </Modal>
             </div>
         )
     }

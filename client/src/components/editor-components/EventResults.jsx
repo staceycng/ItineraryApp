@@ -1,13 +1,19 @@
 import React from 'react';
 import EventResultsItem from './EventResultsItem.jsx';
 
-function EventResults(props){
 
-    return(
-        <div>
-            <h3>Results</h3>
-        </div>
-    )
-}
+const EventResults = props => (
+    <div id='results-container'>
+        <center>
+            <div className='line'></div>
+            <h5>Results</h5>
+            <div id='results'>
+                {props.events ? props.events.map((event) => (
+                    <EventResultsItem event={event} />
+                )) : "NOTHING"}
+            </div>
+        </center>
+    </div>
+)
 
 export default EventResults;

@@ -1,7 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Glegoo:wght@400;700&family=Vampiro+One&display=swap');
+@import url("https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css");
 
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6{
     font-family: 'Glegoo', serif;
+    margin: 10px;
 }
 
 .modal-dialog{
@@ -13,4 +15,58 @@
     padding: 0.5rem;
 }
 
-@import url("https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css");
+.c-e-f{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 90%;
+}
+
+.col{
+    padding-right: 30px;
+}
+
+.card{
+    flex-grow: 1;
+}
+
+.card-body{
+    /* width: max-content; */
+}
+
+.c-h{
+    background-color: rgb(96, 95, 94);
+    font-family: 'Glegoo', serif;
+    font-weight: bold;
+    font-size: 20px;
+    color: white;
+    height: 50px;
+}
+
+.c-h:hover{
+    background-color: rgb(54, 148, 247);
+}
+
+.collapse.show{
+    flex-grow: 1;
+}
+
+.accordion{
+    height: 100%;
+    overflow: auto;
+}
+
+.line{
+    margin-top: 20px;
+    width: 70%;
+    height: 2px;
+    border-top: 1px solid rgb(96, 95, 94);
+}
+
+.alert-info{
+    color: transparent;
+}
+
+
+
+
+

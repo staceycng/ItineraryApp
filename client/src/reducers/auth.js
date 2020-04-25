@@ -8,6 +8,7 @@ const initialState = {
   function authReducer(state = initialState, action) {
     if(action.type === SIGN_IN){
         return Object.assign({}, state, {
+            user: action.payload,
             credentials: 'LOGGED_IN'
           });
     }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
-import { Accordion, Card } from 'react-bootstrap';
+import TimePicker from 'react-bootstrap-time-picker';
+import { Accordion, Card, Form, Row, Col } from 'react-bootstrap';
 
 import FindEventMenu from './FindEventMenu.jsx';
 
@@ -13,10 +13,10 @@ class SidebarMenu extends React.Component {
 
     render() {
         return (
-            <div id='container'>
-                <Accordion defaultActiveKey="0">
-                    <Card>
-                        <Accordion.Toggle as={Card.Header} eventKey="0">
+            <div id='sidebar-container' className='e-e-i default-text'>
+                <Accordion defaultActiveKey="2">
+                    <Card bg="light">
+                        <Accordion.Toggle className="c-h" as={Card.Header} eventKey="0">
                             Import event from Facebook
                         </Accordion.Toggle>
                         <Accordion.Collapse eventKey="0">
@@ -24,23 +24,41 @@ class SidebarMenu extends React.Component {
                         </Accordion.Collapse>
                     </Card>
                     <Card>
-                        <Accordion.Toggle as={Card.Header} eventKey="1">
+                        <Accordion.Toggle className="c-h" as={Card.Header} eventKey="1">
                             Find Event
                         </Accordion.Toggle>
                         <Accordion.Collapse eventKey="1">
                             <Card.Body>
 
                                 <FindEventMenu />
-                                
+
                             </Card.Body>
                         </Accordion.Collapse>
                     </Card>
                     <Card>
-                        <Accordion.Toggle as={Card.Header} eventKey="2">
+                        <Accordion.Toggle className="c-h" as={Card.Header} eventKey="2">
                             Create a custom event
                         </Accordion.Toggle>
                         <Accordion.Collapse eventKey="2">
-                            <Card.Body>Hello! I'm another body</Card.Body>
+                            <Card.Body>
+                                <Form>
+                                    <Form.Control className="c-e-f" type="text" placeholder="Event Title" />
+                                    <Row>
+                                        <Col>
+                                            <Form.Control className="c-e-f" placeholder="Location" />
+                                        </Col>
+                                        <Col>
+                                            <TimePicker className="c-e-f" start="0:00" end="23:59" step={30} />
+                                        </Col>
+                                    </Row>
+                                    <Form.Group controlId="exampleForm.ControlTextarea1">
+                                        <Form.Control className="c-e-f" placeholder="Notes/Description (Optional)" as="textarea" rows="3" />
+                                    </Form.Group>
+                                </Form>
+                                <Button variant="success" type="submit" onClick={this.handleNext}>
+                                    Add!
+                            </Button>
+                            </Card.Body>
                         </Accordion.Collapse>
                     </Card>
                 </Accordion>
