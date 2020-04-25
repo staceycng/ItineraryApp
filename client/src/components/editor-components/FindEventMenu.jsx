@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { Accordion, Card, InputGroup, FormControl, Form } from 'react-bootstrap';
+import { Accordion, Card, InputGroup, FormControl, Form, ButtonGroup, Button } from 'react-bootstrap';
 
 import EventResults from './EventResults.jsx';
 
@@ -13,10 +13,9 @@ class FindEventMenu extends React.Component {
 
     render() {
         return (
-            <div id='container'>
+            <div id='find-events-menu-container'>
                 <Accordion defaultActiveKey="0">
-                    <Card>
-
+                    <Card className="find-card">
                         <InputGroup className="mb-3">
                             <InputGroup.Prepend>
                                 <InputGroup.Text id="basic-addon1"><i className="fas fa-search" /> </InputGroup.Text>
@@ -80,7 +79,11 @@ class FindEventMenu extends React.Component {
                                         <Accordion.Collapse eventKey="2">
                                             <Card.Body>
 
-
+                                                <ButtonGroup className="center" size="sm">
+                                                    <Button>Free</Button>
+                                                    <Button>Paid</Button>
+                                                    <Button>All</Button>
+                                                </ButtonGroup>
                                             </Card.Body>
                                         </Accordion.Collapse>
                                     </Card>

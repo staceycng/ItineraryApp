@@ -3,7 +3,8 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link
+    Link,
+    NavLink
   } from "react-router-dom";
 import { connect } from "react-redux";
 
@@ -16,7 +17,7 @@ function ConnectedHeader({ credentials }){
         return(
             <div id='header'>
                 <div className='logo'>
-                    night out.
+                    <NavLink to="/" style={{ textDecoration: 'none', color: "rgb(0, 153, 204)"}}>night out.</NavLink>
                 </div>
                 <div className='icons'>
                     <div className='header-button'>
@@ -30,11 +31,11 @@ function ConnectedHeader({ credentials }){
             </div>
         )
     }
-    else{
+    else if(credentials === 'LOGGED_IN'){
         return(
             <div id='header'>
                 <div className='logo'>
-                    night out.
+                    <NavLink to="/" style={{ textDecoration: 'none', color: "rgb(0, 153, 204)" }}>night out.</NavLink>
                 </div>
                 <div className='icons'>
                     <div className='header-button header-signed-in'>
@@ -54,6 +55,9 @@ function ConnectedHeader({ credentials }){
                 </div>
             </div>
         )
+    }
+    else if(credentials === 'LOGGED_IN_EDITING'){
+        
     }
 }
 

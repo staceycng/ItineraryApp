@@ -1,13 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Glegoo:wght@400;700&family=Vampiro+One&display=swap');
 @import url("https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css");
 @import './custom.css';
-@import'react-datepicker/dist/react-datepicker-cssmodules.css';
+@import'~react-datepicker/dist/react-datepicker-cssmodules.css';
+@import '~@fullcalendar/core/main.css';
+@import '~@fullcalendar/daygrid/main.css';
 
 $logo-color: rgb(0, 153, 204);
 $logo-font: 'Vampiro One', cursive;
 $body-font: 'Glegoo', serif;
 $body-color: rgb(54, 148, 247);
 $body-font-color: rgb(96, 95, 94);
+$muted-body-color: rgb(82, 165, 230); 
 
 *{
     margin: 0;
@@ -153,3 +156,58 @@ $body-font-color: rgb(96, 95, 94);
     float: right;
     padding-right: 10px;
 }
+
+#event-editor{
+    display: flex;
+    margin-top: 90px;
+    flex-grow: 1;
+}
+
+.e-e-i{
+    height: 100%;
+}
+
+#sidebar-container{
+    width: 40%;
+}
+
+#calendar{
+    width: 60%;
+    position: fixed;
+    right: 0;
+    padding: 10px;
+}
+
+#e-e-c{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#find-card{
+    border: none;
+}
+
+.center{
+    margin: auto;
+}
+
+#results{
+    display: table;
+  margin: 0 auto;
+}
+
+.result{
+    display: flex;
+    margin: 10px;
+}
+
+.result-info{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin-left: 10px;
+    font-family: $body-font;
+    font-size: 12px;
+}
+

@@ -1,6 +1,15 @@
 import React from 'react';
 import { Form, Button, InputGroup, FormControl } from 'react-bootstrap';
 import { connect } from "react-redux";
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    Redirect,
+    withRouter
+} from "react-router-dom";
+
 
 const mapDispatchToProps = (dispatch) => {
     return{
@@ -63,10 +72,11 @@ class ConnectedEventWizard2 extends React.Component {
         console.log('Handling next-->', this.props);
         var payload = this.state;
         this.props.saveItinerary(payload);
+        console.log('props--->', this.props);
+        this.props.history.push('/event-editor');
     }
 
     // Send current state to store, send from store to database
-     // Send current state to store, send from store to database
      handleSave(event){
         event.preventDefault();
         var saved = this.props.itinerary;
@@ -104,8 +114,8 @@ class ConnectedEventWizard2 extends React.Component {
                         <div className='collab-item'>{user.name}<span className='collab-delete' onClick={this.handleDelete} id={user.name}>x</span></div>
                     ))}
                     </div>
-                    <div className='form-item form-button' onClick={this.handleSave}>
-                        <Button variant="light" type="submit">
+                    <div className='form-item form-button'>
+                        <Button variant="light" type="submit" onClick={this.handleSave}>
                             Save Progress
                         </Button>
                         <Button variant="success" type="submit" onClick={this.handleNext}>
@@ -119,4 +129,5 @@ class ConnectedEventWizard2 extends React.Component {
 }
 
 var EventWizard2 = connect(mapStateToProps, mapDispatchToProps)(ConnectedEventWizard2);
-export default EventWizard2;
+
+export default withRouter(EventWizard2);
