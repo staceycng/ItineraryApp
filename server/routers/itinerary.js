@@ -2,34 +2,13 @@ const express = require('express');
 const router = express.Router();
 const Itinerary = require('../models/Itinerary.js');
 const passport = require('passport')
-const FacebookStrategy = require('passport-facebook')
-require('dotenv').config()
 
 //Input validators
 const validateItineraryInput = require('../validation/itinerary.js');
 const validateEventInput = require('../validation/event.js');
 
-// router.get("/test", passport.authenticate('jwt', { session: false }), (req, res) => {
-//     res.status(200).send("test itinerary route");
-// });
-
-const fbOptions = {
-    clientID: process.env.FACEBOOK_APP_ID,
-    clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: 'https://localhost:3000/itinerary/auth/facebook/test',
-    profileFields: ['emails', 'name']
-}
-
-const fbCallback = (accessToken, refreshToken, profile, done) => {
-    console.log(accessToken, refreshToken, profile)
-}
-
-passport.use(new FacebookStrategy(fbOptions, fbCallback))
-
-
-router.get("/test", passport.authenticate('facebook', { scope: ['email'] }));
-router.get("/auth/facebook/test", passport.authenticate('facebook', (err, user, info) => console.log('worked')), (req, res) => {
-    res.status(200).send("facebook working!");
+router.get("/test", passport.authenticate('jwt', { session: false }), (req, res) => {
+    res.status(200).send("test itinerary route");
 });
 
 
