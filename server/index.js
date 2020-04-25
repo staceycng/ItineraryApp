@@ -14,6 +14,7 @@ const port = process.env.port || 3000;
 const users = require('./routers/users.js');
 const itinerary = require('./routers/itinerary.js');
 const yelp = require('./routers/yelp.js');
+const facebook = require('./routers/facebook.js')
 
 //mongo database URI string
 const db = require('../config/keys.js').mongo_uri;
@@ -31,6 +32,8 @@ app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use("/users", users);
 app.use("/itinerary", itinerary);
 app.use("/yelp", yelp);
+app.use("/facebook", facebook);
+
 
 
 
@@ -53,20 +56,20 @@ var certOptions = {
  * -----------Unsecure server--------------
  */
 
-app.listen(port, (err) => {
-    if (err) {
-        console.log(err);
-    } else {
-        console.log(`Unsecured Server is listening on port ${port}`);
-    }
-})
+// app.listen(port, (err) => {
+//     if (err) {
+//         console.log(err);
+//     } else {
+//         console.log(`Unsecured Server is listening on port ${port}`);
+//     }
+// })
 
 
 /**
  * -----------Secure server--------------
  */
-// https.createServer(certOptions, app)
-//     .listen(port, () => console.log(`Secured Server is listening on port ${port}`))
+https.createServer(certOptions, app)
+    .listen(port, () => console.log(`Secured Server is listening on port ${port}`))
 
 
 
