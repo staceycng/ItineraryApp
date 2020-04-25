@@ -15,7 +15,7 @@ router.get("/test", passport.authenticate('jwt', { session: false }), (req, res)
 //@route   GET itinerary/
 //@desc    Gets a users list of Itinerarys by their userID
 //@access  Private
-router.get("/", (req, res) => {
+router.get("/", passport.authenticate('jwt', { session: false }), (req, res) => {
     Itinerary.find({ user: req.user.id })
         .then(result => res.status(200).send(result))
         .catch(err => res.status(404).json({ notfound: "No Itinerarys were found" }));
@@ -25,7 +25,7 @@ router.get("/", (req, res) => {
 //@route   POST itinerary/
 //@desc    Creates a new itinerary
 //@access  Private
-router.post("/", (req, res) => {
+router.post("/", passport.authenticate('jwt', { session: false }), (req, res) => {
     let { errors, isValid } = validateItineraryInput(req.body);
 
     if (!isValid) {
@@ -37,10 +37,10 @@ router.post("/", (req, res) => {
     }
 });
 
-//@route   PUT itinerary/
-//@desc    Updates an existing  itinerary
+//@route   POST itinerary/:id
+//@desc    Updates an existing itinerary by its id
 //@access  Private
-router.post("/:id", (req, res) => {
+router.post("/:id", passport.authenticate('jwt', { session: false }), (req, res) => {
     let { errors, isValid } = validateItineraryInput(req.body);
 
     if (!isValid) {
@@ -55,7 +55,7 @@ router.post("/:id", (req, res) => {
 //@route   DELETE itinerary/:id
 //@desc    Deletes an itinerary by its ID
 //@access  Private
-router.delete("/:id", (req, res) => {
+router.delete("/:id", passport.authenticate('jwt', { session: false }), (req, res) => {
     Itinerary.deleteOne({ _id: req.params.id, user: req.user.id }).then(result => {
             res.status(200).send(result);
         })
@@ -67,7 +67,7 @@ router.delete("/:id", (req, res) => {
 //@route   POST itinerary/event
 //@desc    Creates a new event in an itinerary
 //@access  Private
-router.post("/event/:id", (req, res) => {
+router.post("/event/:id", passport.authenticate('jwt', { session: false }), (req, res) => {
     let { errors, isValid } = validateEventInput(req.body);
 
     if (!isValid) {
@@ -90,7 +90,7 @@ router.post("/event/:id", (req, res) => {
 //@route   DELETE itinerary/event/:id
 //@desc    Deletes an event in an itinerary by its ID
 //@access  Private
-router.delete("/event/:id/:event_id", (req, res) => {
+router.delete("/event/:id/:event_id", passport.authenticate('jwt', { session: false }), (req, res) => {
     Itinerary.update({ user: req.user.id, _id: req.params.id }, { $pull: { events: req.params.event_id } })
         .then(result => res.status(200).send(result))
         .catch(err => res.status(400).send(err));

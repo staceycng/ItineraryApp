@@ -8,16 +8,22 @@ import { SIGN_IN } from '../constants/action-types';
 // Register User
 export const registerUser = (userData, history) => dispatch => {
     axios.post("/users/create", userData)
-        .then(res => history.push("/sign-in"))
-    //.catch(err => dispatch({
-    //    type: GET_ERRORS,
-    //    payload: err.response.data
-    //})
-    //);
+        .then(res => {
+            alert("Successfully registered!");
+            history.push("/sign-in");
+        })
+        .catch(err => {
+            // dispatch({
+            //     type: GET_ERRORS,
+            //     payload: err.response.data
+            // })
+            alert(JSON.stringify(err.response.data.errorMessage));
+        }
+        );
 };
 
 // Login -Get User token
-export const LoginUser = (userData) => (dispatch) => {
+export const loginUser = (userData) => (dispatch) => {
     axios.post("/users/login", userData)
         .then(res => {
             // Save to local storage
@@ -28,15 +34,18 @@ export const LoginUser = (userData) => (dispatch) => {
             setAuthToken(token);
             // Decode token to get user data
             const decoded = jwt_decode(token);
+            console.log(token);
             // Set current user
             dispatch(setCurrentUser(decoded));
+            alert(`Welcome ${decoded.username}!  You have successfully logged in.`);
         })
-    // .catch(err =>
-    //     dispatch({
-    //         type: GET_ERRORS,
-    //         payload: err.response.data
-    //     })
-    // )
+        .catch(err => {
+            // dispatch({
+            //     type: GET_ERRORS,
+            //     payload: err.response.data
+            // })
+            alert(JSON.stringify(err.response.data.errorMessage));
+        })
 };
 
 
