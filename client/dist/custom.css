@@ -62,6 +62,10 @@
     border-top: 1px solid rgb(96, 95, 94);
 }
 
+.alert-info{
+    color: transparent;
+}
+
 
 
 

@@ -5,6 +5,7 @@ import SignIn from './Sign-In.jsx';
 import SignUp from './Sign-Up.jsx';
 import EventWizard from './Event-Wizard.jsx';
 import EventEditor from './Event-Editor.jsx';
+import ViewExisting from './View-Existing.jsx';
 import {
     BrowserRouter as Router,
     Switch,
@@ -67,6 +68,9 @@ class App extends React.Component {
                         </Route>
                         <Route path="/event-editor">
                             <EventEditor />
+                        </Route>
+                        <Route path="/view-existing">
+                            <ViewExisting />
                         </Route>
                         <Route path="/">
                             <SplashPage />
