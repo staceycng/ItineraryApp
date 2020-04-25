@@ -68,11 +68,11 @@ router.delete("/:id", passport.authenticate('jwt', { session: false }), (req, re
 //@desc    Creates a new event in an itinerary
 //@access  Private
 router.post("/event/:id", passport.authenticate('jwt', { session: false }), (req, res) => {
-    let { errors, isValid } = validateEventInput(req.body);
+    //let { errors, isValid } = validateEventInput(req.body);
 
-    if (!isValid) {
-        res.status(400).send(errors);
-    } else {
+    //if (!isValid) {
+    //    res.status(400).send(errors);
+    //} else {
         const newEvent = {
             name: req.body.name,
             location: req.body.location,
@@ -84,7 +84,7 @@ router.post("/event/:id", passport.authenticate('jwt', { session: false }), (req
         Itinerary.update({ user: req.user.id, _id: req.params.id }, { $push: { events: newEvent } })
             .then(result => res.status(200).send(result))
             .catch(err => res.status(400).send(err));
-    }
+    //}
 });
 
 //@route   DELETE itinerary/event/:id

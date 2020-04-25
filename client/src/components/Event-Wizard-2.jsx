@@ -12,7 +12,7 @@ import {
 
 
 const mapDispatchToProps = (dispatch) => {
-    return{
+    return {
         saveItinerary: (payload) => dispatch(saveItinerary(payload)),
         saveItineraryDB: (payload) => dispatch(saveItineraryDB(payload)),
         saveItineraryDBById: (payload) => dispatch(saveItineraryDBById(payload))
@@ -20,11 +20,14 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const mapStateToProps = state => {
-    return { itinerary: state.itinerary.itinerary };
+    return {
+        itinerary: state.itinerary.itinerary,
+        user: state.auth.user
+    };
 };
 
 class ConnectedEventWizard2 extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             collaborators: [
@@ -39,22 +42,22 @@ class ConnectedEventWizard2 extends React.Component {
         this.handleNext = this.handleNext.bind(this);
     }
 
-    handleShare(event){
+    handleShare(event) {
         event.preventDefault();
-        var collaborator =  document.getElementById('collab-name').value;
+        var collaborator = document.getElementById('collab-name').value;
         var currCollabs = this.state.collaborators;
         var collab = {
             name: collaborator,
             email: 'test'
         };
         currCollabs.push(collab);
-        
+
         this.setState({
             collaborators: currCollabs
         })
     }
 
-    handleDelete(event){
+    handleDelete(event) {
         event.preventDefault();
         var user = event.target.id;
         var currCollabs = this.state.collaborators;
@@ -67,33 +70,36 @@ class ConnectedEventWizard2 extends React.Component {
     }
 
     // Send current state to store
-    handleNext(event){
+    handleNext(event) {
         event.preventDefault();
         console.log('Handling next-->', this.props);
         var payload = this.state;
+        payload.user = this.props.user.id;
         this.props.saveItinerary(payload);
         console.log('props--->', this.props);
         this.props.history.push('/event-editor');
     }
 
     // Send current state to store, send from store to database
-     handleSave(event){
+    handleSave(event) {
         event.preventDefault();
         var saved = this.props.itinerary;
         var payload = this.state;
+        payload.user = this.props.user.id;
+        console.log(payload.user);
         // If nothing has been saved to the store or store has not been sent to DB
         console.log('payload in component-->', payload);
-        if((saved === null) || (!(saved._id))){
+        if ((saved === null) || (!(saved._id))) {
             // Save state to store & send info to DB
             this.props.saveItineraryDB(payload);
         }
-        else{
+        else {
             this.props.saveItineraryDBById(payload);
         }
-        
+
     }
 
-    render(){
+    render() {
         var collaborators = this.state.collaborators;
         console.log('state--->', this.state.collaborators);
         return (
@@ -109,10 +115,10 @@ class ConnectedEventWizard2 extends React.Component {
                         </InputGroup>
                     </div>
                     <div className='form-item collab-list'>
-                    <h3>Current Collaborators</h3>
-                    {collaborators.map((user) => (
-                        <div className='collab-item'>{user.name}<span className='collab-delete' onClick={this.handleDelete} id={user.name}>x</span></div>
-                    ))}
+                        <h3>Current Collaborators</h3>
+                        {collaborators.map((user) => (
+                            <div className='collab-item'>{user.name}<span className='collab-delete' onClick={this.handleDelete} id={user.name}>x</span></div>
+                        ))}
                     </div>
                     <div className='form-item form-button'>
                         <Button variant="light" type="submit" onClick={this.handleSave}>

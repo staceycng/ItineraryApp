@@ -13,7 +13,10 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const mapStateToProps = state => {
-    return { itinerary: state.itinerary.itinerary };
+    return { 
+        itinerary: state.itinerary.itinerary,
+        user: state.auth.user
+    };
 };
 
 class ConnectedEventWizard1 extends React.Component {
@@ -55,6 +58,7 @@ class ConnectedEventWizard1 extends React.Component {
     handleNext(event){
         event.preventDefault();
         var payload = this.state;
+        payload.user = this.props.user.id;
         this.props.saveItinerary(payload);
     }
 
@@ -66,6 +70,7 @@ class ConnectedEventWizard1 extends React.Component {
         if((saved === null) || (!(saved._id))){
             // Save state to store & send info to DB
             var payload = this.state;
+            payload.user = this.props.user.id;
             this.props.saveItineraryDB(payload);
         }
         
