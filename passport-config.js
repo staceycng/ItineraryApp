@@ -37,11 +37,8 @@ module.exports.issueToken = issueToken
 module.exports.customStrategy = (passport) => {
     passport.use(new JwtStrategy(options, (payload, done) => {
         //might change from _id to email
-
         User.findOne({ _id: payload.id })
             .then((user) => {
-                // console.log('jwt working', done)
-
                 user ? done(null, user) : done(null, false)
             })
             .catch((err) => done(err, null))
