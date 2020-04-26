@@ -254,4 +254,10 @@
   height: 100%;
 }
 
+#add-yelp {
+  float: right;
+  height: 40px;
+  width: 100px;
+}
+
 /*# sourceMappingURL=style.css.map */
