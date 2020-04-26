@@ -8,8 +8,8 @@ import moment from 'moment';
 import '../../dist/style.scss'
 
 const mapStateToProps = state => {
-    console.log('events from store--->', state.itinerary.itinerary.events)
     return { events: state.itinerary.itinerary.events, date: state.itinerary.itinerary.date };
+
 };
 
 class ConnectedCalendar extends React.Component {
@@ -20,21 +20,23 @@ class ConnectedCalendar extends React.Component {
         }
     }
 
-    // static getDerivedStateFromProps(nextProps, prevState) {
-    //     console.log('in derived state--->', nextProps)
-    //     if (nextProps.events !== prevState.events) {
-    //         return { events: nextProps.events };
-    //     }
-    //     else return null;
-    // }
+    componentDidUpdate(prevProps, prevState){
+        console.log('prevProps--->', prevProps.events);
+        console.log('prevState--->', prevState.events);
+        console.log('currProps-->', this.props.events);
+        console.log('currState-->', this.state.events);
 
-    // componentDidUpdate(prevProps, prevState) {
-    //     console.log('in CDU--->', prevProps)
-    //     if (prevProps.events !== this.props.events) {
-    //         //Perform some operation here
-    //         this.setState({ events: this.props.events });
-    //     }
-    // }
+        var propsStr = JSON.stringify(this.props.events);
+        var prevStateStr = JSON.stringify(prevState.events);
+
+        if(propsStr !== prevStateStr){
+            console.log('No match!');
+            this.setState({
+                events: this.props.events
+            })
+        }
+
+    }
 
     componentDidMount() {
         console.log('Mounting!', this.props.events);

@@ -5,8 +5,14 @@ import { connect } from "react-redux";
 
 
 const mapStateToProps = (state) => {
-    return { events: state.itinerary.itinerary.events, date: state.itinerary.itinerary.date };
+    return { events: state.itinerary.itinerary.events, date: state.itinerary.itinerary.date, start: state.itinerary.itinerary.start };
 };
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        saveItinerary: (payload) => dispatch(saveItinerary(payload))
+    };
+}
 
 function ConnectedEventResults(props) {
 
@@ -36,16 +42,16 @@ function ConnectedEventResults(props) {
         // console.log('start-->', startTime);
         // console.log('end-->', endTime);
 
+
         var newEvent = {
             title: name,
             location: location,
             notes: description,
             startTime: startTime,
             endTime: endTime,
-            date: props.date
+            date: props.start
         }
 
-        console.log('new--->', newEvent);
     }
 
     return (
