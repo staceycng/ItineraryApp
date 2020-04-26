@@ -7,12 +7,13 @@ import moment from 'moment';
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        saveItinerary: (payload) => dispatch(saveItinerary(payload))
+        saveItinerary: (payload) => dispatch(saveItinerary(payload)),
+        addEvent: (payload) => dispatch(addEvent(payload))
     };
 }
 
 const mapStateToProps = (state) => {
-    return { events: state.itinerary.itinerary.events, date: state.itinerary.itinerary.date };
+    return { events: state.itinerary.itinerary.events, date: state.itinerary.itinerary.date, _id: state.itinerary.itinerary._id };
 };
 
 class ConnectedSidebarMenu extends React.Component {
@@ -67,8 +68,8 @@ class ConnectedSidebarMenu extends React.Component {
         }
 
         payload.events.push(newEvent);
-        console.log('payload--->', payload);
-        this.props.saveItinerary(payload);
+        this.props.addEvent(newEvent, payload)
+        // this.props.saveItinerary(payload);
 
         this.setState({
             events: payload.events,
@@ -76,7 +77,8 @@ class ConnectedSidebarMenu extends React.Component {
             location: '',
             startTime: "0:00",
             endTime: "0:00",
-            notes: ''
+            notes: '',
+            date: formattedDate
         })
     }
 

@@ -13,7 +13,7 @@ class EventEditor extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            toggle: true
+            itinerary: {}
         }
     }
 
@@ -33,6 +33,25 @@ class EventEditor extends React.Component {
     //     }
     // }
 
+    // componentDidUpdate(prevProps, prevState, snapshot){
+    //     var currProps = this.state;
+        
+    //     var stringCurr = JSON.stringify(currProps.itinerary);
+    //     var stringPrev = JSON.stringify(prevProps.itinerary.itinerary);
+    //     console.log('currState-->', stringCurr);
+    //     console.log('prevProps--->', stringPrev);
+
+    //     if(stringCurr === stringPrev){
+    //         console.log('Props are the same!');
+    //     }
+    //     else if ((stringCurr !== stringPrev) || (stringPrev === undefined)){
+    //         console.log('Props not the same, update!!!!!!');
+    //         this.setState({
+    //             itinerary: this.props.itinerary.itinerary
+    //         })
+    //     }
+    // }
+
     render() {
 
         let { loading, itinerary } = this.props.itinerary;
@@ -47,7 +66,7 @@ class EventEditor extends React.Component {
                 {itinerary === null || loading ? <Spinner animation="grow" variant="primary" /> : (
                     <div id='event-editor'>
                         <SidebarMenu />
-                        <EventEditorCalendar />
+                        <EventEditorCalendar itinerary={itinerary}/>
                     </div>
                 )}
 
