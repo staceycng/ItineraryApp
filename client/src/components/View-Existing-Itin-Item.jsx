@@ -10,7 +10,7 @@ import {
 
 var itinItem = (({ itin, history }) => {
 
-    var dateArr = itin.start.split(' ');
+    var dateArr = itin.start;
     var month = dateArr[1];
     var date = dateArr[2];
     var year = dateArr[3];
@@ -28,7 +28,7 @@ var itinItem = (({ itin, history }) => {
         <div className="itin-item" onClick={handleClick}>
             <h5>{itin.name}</h5>
             <div><b>Date:</b> {dateString}</div>
-            <div><b>Created By:</b> {itin.user}</div>
+            <div><b>Created By:</b> {itin.user.name}</div>
             <div><b>Description:</b> {itin.description}</div>
         </div>
     )

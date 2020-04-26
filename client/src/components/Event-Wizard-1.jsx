@@ -8,7 +8,8 @@ import { connect } from "react-redux";
 const mapDispatchToProps = (dispatch) => {
     return{
         saveItinerary: (payload) => dispatch(saveItinerary(payload)),
-        saveItineraryDB: (payload) => dispatch(saveItineraryDB(payload))
+        saveItineraryDB: (payload) => dispatch(saveItineraryDB(payload)),
+        clearCurrentItinerary: (payload) => dispatch(clearCurrentItinerary())
     };
 };
 
@@ -34,6 +35,9 @@ class ConnectedEventWizard1 extends React.Component {
 
     // Get current date/time, save to local state
     componentDidMount() {
+
+        //this.props.clearCurrentItinerary();
+
         var currDate = new Date();
         this.setState({
             date: currDate
@@ -58,7 +62,7 @@ class ConnectedEventWizard1 extends React.Component {
     handleNext(event){
         event.preventDefault();
         var payload = this.state;
-        payload.user = this.props.user.id;
+        //payload.user = this.props.user.id;
         this.props.saveItinerary(payload);
     }
 
@@ -71,7 +75,7 @@ class ConnectedEventWizard1 extends React.Component {
             // Save state to store & send info to DB
             var payload = this.state;
             payload.user = this.props.user.id;
-            this.props.saveItineraryDB(payload);
+            this.props.saveItineraryDB(payload, this.props.history);
         }
         
     }
@@ -98,9 +102,9 @@ class ConnectedEventWizard1 extends React.Component {
                         </Form.Group>
                     </div>
                     <div className='form-item form-button'>
-                        <Button variant="light" type="submit" onClick={this.handleSave}>
+                        {/* <Button variant="light" type="submit" onClick={this.handleSave}>
                             Save Progress
-                            </Button>
+                            </Button> */}
                         <Link smooth to="/create-new/#add-collaborators">
                             <Button variant="success" type="submit" onClick={this.handleNext}>
                                 Onward!

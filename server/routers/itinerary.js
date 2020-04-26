@@ -17,6 +17,7 @@ router.get("/test", passport.authenticate('jwt', { session: false }), (req, res)
 //@access  Private
 router.get("/", passport.authenticate('jwt', { session: false }), (req, res) => {
     Itinerary.find({ user: req.user.id })
+        .populate("user", ["name"])
         .then(result => res.status(200).send(result))
         .catch(err => res.status(404).json({ notfound: "No Itinerarys were found" }));
 });
@@ -26,6 +27,7 @@ router.get("/", passport.authenticate('jwt', { session: false }), (req, res) => 
 //@access  Private
 router.get("/invited", passport.authenticate('jwt', { session: false }), (req, res) => {
     Itinerary.find({ collaborators: { $regex: new RegExp(req.user.email, 'i') } })
+        .populate("user", ["name"])
         .then(result => res.status(200).send(result))
         .catch(err => res.status(404).json({ notfound: "No Itinerarys were found" }));
 });
@@ -58,10 +60,13 @@ router.get("/:itin_id", passport.authenticate('jwt', { session: false }), (req, 
 router.post("/", passport.authenticate('jwt', { session: false }), (req, res) => {
     let { errors, isValid } = validateItineraryInput(req.body);
 
+    let newItin = req.body;
+    newItin.user = req.user.id;
+
     if (!isValid) {
         res.status(400).send(errors);
     } else {
-        Itinerary.create(req.body).then(result => {
+        Itinerary.create(newItin).then(result => {
             res.status(200).send(result);
         })
     }
@@ -107,12 +112,13 @@ router.post("/event/:id", passport.authenticate('jwt', { session: false }), (req
         title: req.body.title,
         location: req.body.location,
         image: req.body.image,
-        startTime: req.body.start,
-        endTime: req.body.end,
-        notes: req.body.notes
+        startTime: req.body.startTime,
+        endTime: req.body.endTime,
+        notes: req.body.notes,
+        date: req.body.date
     }
 
-    Itinerary.findOneAndUpdate({ $or: [{ user: req.user.id, _id: req.params.id }, { _id: req.params.id, collaborators: { $regex: new RegExp(req.user.email, 'i') } }] }, { $push: { events: newEvent } })
+    Itinerary.findOneAndUpdate({ $or: [{ user: req.user.id, _id: req.params.id }, { _id: req.params.id, collaborators: { $regex: new RegExp(req.user.email, 'i') } }] }, { $push: { events: newEvent } }, { new: true })
         //Itinerary.update({ user: req.user.id, _id: req.params.id }, { $push: { events: newEvent } })
         .then(result => res.status(200).send(result))
         .catch(err => res.status(400).send(err));
@@ -123,7 +129,7 @@ router.post("/event/:id", passport.authenticate('jwt', { session: false }), (req
 //@desc    Deletes an event in an itinerary by its ID
 //@access  Private
 router.delete("/event/:id/:event_id", passport.authenticate('jwt', { session: false }), (req, res) => {
-    Itinerary.findOneAndUpdate({ $or: [{ user: req.user.id, _id: req.params.id }, { _id: req.params.id, collaborators: { $regex: new RegExp(req.user.email, 'i') } }] }, { $pull: { events: { _id: req.params.event_id } } })
+    Itinerary.findOneAndUpdate({ $or: [{ user: req.user.id, _id: req.params.id }, { _id: req.params.id, collaborators: { $regex: new RegExp(req.user.email, 'i') } }] }, { $pull: { events: { _id: req.params.event_id } } }, { new: true })
         .then(result => res.status(200).send(result))
         .catch(err => res.status(400).send(err));
 });
