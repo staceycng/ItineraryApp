@@ -31,9 +31,7 @@ class ConnectedEventWizard2 extends React.Component {
         super(props);
         this.state = {
             collaborators: [
-                {
-                    name: 'Brian'
-                }
+                'keanu.reeves@gmail.com'
             ]
         }
         this.handleShare = this.handleShare.bind(this);
@@ -115,7 +113,7 @@ class ConnectedEventWizard2 extends React.Component {
                     <div className='form-item collab-list'>
                         <h3>Current Collaborators</h3>
                         {collaborators.map((user) => (
-                            <div className='collab-item'>{user.name}<span className='collab-delete' onClick={this.handleDelete} id={user.name}>x</span></div>
+                            <div className='collab-item'>{user}<span className='collab-delete' onClick={this.handleDelete} id={user}>x</span></div>
                         ))}
                     </div>
                     <div className='form-item form-button'>

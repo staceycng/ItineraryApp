@@ -1,6 +1,8 @@
 import React from 'react';
 import Header from './Header.jsx';
 import { Nav } from 'react-bootstrap';
+import TimePicker from 'react-bootstrap-time-picker';
+
 import ItinItems from './View-Existing-Itin-Item.jsx'
 
 class ViewExisting extends React.Component {
