@@ -1,4 +1,4 @@
-import { SIGN_IN } from '../constants/action-types';
+import { SIGN_IN, LOG_OUT } from '../constants/action-types';
 
 const initialState = {
     credentials: 'NOT_LOGGED_IN',
@@ -12,6 +12,15 @@ const initialState = {
             credentials: 'LOGGED_IN'
           });
     }
+
+    if (action.type === LOG_OUT) {
+      return {
+        ...state,
+        user: {},
+        credentials: 'NOT_LOGGED_IN'
+      }
+    }
+
     return state;
   };
   

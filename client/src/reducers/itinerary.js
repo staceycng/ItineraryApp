@@ -3,8 +3,8 @@ import axios from 'axios';
 
 const initialState = {
   itinerary: {},
-  itineraries: null,
-  itinerariesInvited: null,
+  itineraries: [],
+  itinerariesInvited: [],
   loading: true
 };
 

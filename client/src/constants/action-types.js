@@ -1,5 +1,7 @@
 export const SIGN_IN = 'SIGN_IN';
 
+export const LOG_OUT = "LOG_OUT";
+
 export const SAVE_ITIN = 'SAVE_ITIN';
 
 export const SAVE_ITIN_DB = 'SAVE_ITIN_DB';
