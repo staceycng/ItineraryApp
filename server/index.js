@@ -56,20 +56,20 @@ var certOptions = {
  * -----------Unsecure server--------------
  */
 
-app.listen(port, (err) => {
-    if (err) {
-        console.log(err);
-    } else {
-        console.log(`Unsecured Server is listening on port ${port}`);
-    }
-})
+// app.listen(port, (err) => {
+//     if (err) {
+//         console.log(err);
+//     } else {
+//         console.log(`Unsecured Server is listening on port ${port}`);
+//     }
+// })
 
 
 /**
  * -----------Secure server--------------
  */
-// https.createServer(certOptions, app)
-//     .listen(port, () => console.log(`Secured Server is listening on port ${port}`))
+https.createServer(certOptions, app)
+    .listen(port, () => console.log(`Secured Server is listening on port ${port}`))
 
 
 
