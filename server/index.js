@@ -8,7 +8,7 @@ const FacebookStrategy = require('passport-facebook')
 var https = require('https')
 var fs = require('fs')
 
-const port = process.env.port || 3000;
+const port = process.env.PORT || 3000;
 
 // server api routes
 const users = require('./routers/users.js');
@@ -17,7 +17,7 @@ const yelp = require('./routers/yelp.js');
 const facebook = require('./routers/facebook.js')
 
 //mongo database URI string
-const db = require('../config/keys.js').mongo_uri;
+// const db = require('../config/keys.js').mongo_uri;
 
 //passport configuration and initialization
 customStrategy(passport)
@@ -39,7 +39,7 @@ app.use("/facebook", facebook);
 
 
 mongoose
-    .connect(db, {
+    .connect(process.env.MONGODB_URI || process.env.MONGO_DB, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useCreateIndex: true
@@ -47,34 +47,47 @@ mongoose
     .then(() => console.log("MongoDB Connected"))
     .catch(err => console.log(err));
 
-app.get('*', function (request, response) {
-    response.sendFile(path.resolve(__dirname, '../client','dist', 'index.html'))
+app.get('*', function(request, response) {
+    response.sendFile(path.resolve(__dirname, '../client', 'dist', 'index.html'))
 })
 
 
-// var certOptions = {
-//     key: fs.readFileSync(path.resolve('config/server.key')),
-//     cert: fs.readFileSync(path.resolve('config/server.crt'))
-// }
 
-/**
- * -----------Unsecure server--------------
- */
-
-app.listen(port, (err) => {
-    if (err) {
-        console.log(err);
-    } else {
-        console.log(`Unsecured Server is listening on port ${port}`);
+//for Heroku deployment
+if (process.env.NODE_ENV === 'production') {
+    /**
+     * -----------Unsecure server--------------
+     */
+    app.listen(port, (err) => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(`Unsecured Server is listening on port ${port}`);
+        }
+    })
+} else {
+    /**
+     * -----------Secure server--------------
+     */
+    var certOptions = {
+        key: fs.readFileSync(path.resolve('config/server.key')),
+        cert: fs.readFileSync(path.resolve('config/server.crt'))
     }
-})
+
+    https.createServer(certOptions, app)
+        .listen(port, () => console.log(`Secured Server is listening on port ${port}`))
+}
+
+//if not deployed and without SSL, comment out the following code:
+// app.listen(port, (err) => {
+//   if (err) {
+//       console.log(err);
+//   } else {
+//       console.log(`Unsecured Server is listening on port ${port}`);
+//   }
+// })
 
 
-/**
- * -----------Secure server--------------
- */
-// https.createServer(certOptions, app)
-//     .listen(port, () => console.log(`Secured Server is listening on port ${port}`))
 
 
 

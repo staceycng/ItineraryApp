@@ -12,7 +12,7 @@ require('dotenv').config()
 const fbOptions = {
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: 'https://localhost:3000/facebook/auth/login',
+    callbackURL: 'https://the-nightout-app.herokuapp.com/facebook/auth/login',
     profileFields: ['emails', 'displayName', 'first_name']
 }
 
@@ -49,7 +49,7 @@ router.get("/auth/login", passport.authenticate('facebook', {
 }), (req, res, next) => {
     const jwt = issueToken(req.user)
     res.cookie('fbt', { token: jwt.token, expiresIn: jwt.expiresIn });
-    res.redirect('https://localhost:3000');
+    res.redirect('https://the-nightout-app.herokuapp.com/');
 });
 
 

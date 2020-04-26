@@ -1,9 +1,12 @@
 node_modules
 config
 .env 
-package.json
-package-lock.json
+# package.json
+# package-lock.json
 client/dist/bundle.js
+
+publicKey.pem
+privateKey.pem
 
 package.json.3511403573
 package-lock.json.2677337080
