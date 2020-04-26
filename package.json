@@ -11,7 +11,7 @@
         "build": "webpack -w",
         "start": "node server/index.js",
         "genKeyPair": "node genKeyPair.js",
-        "heroku-postbuild": "npm install && npm run build"
+        "heroku-postbuild": "npm run genKeyPair && npm run build"
     },
     "repository": {
         "type": "git",
