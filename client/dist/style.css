@@ -247,6 +247,7 @@
   margin-left: 10px;
   font-family: "Glegoo", serif;
   font-size: 12px;
+  width: 200px;
 }
 
 #calendar-module {
@@ -254,10 +255,19 @@
   height: 100%;
 }
 
-#add-yelp {
-  float: right;
+.add-yelp {
+  align-self: center;
   height: 40px;
   width: 100px;
+}
+
+.result-image {
+  max-width: 150px;
+  width: 100%;
+}
+
+.result-container {
+  display: flex;
 }
 
 /*# sourceMappingURL=style.css.map */

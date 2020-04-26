@@ -257,6 +257,7 @@ $muted-body-color: rgb(82, 165, 230);
     margin-left: 10px;
     font-family: $body-font;
     font-size: 12px;
+    width: 200px;
 }
 
 #calendar-module{
@@ -264,8 +265,17 @@ $muted-body-color: rgb(82, 165, 230);
     height: 100%;
 }
 
-#add-yelp{
-    float: right;
+.add-yelp{
+    align-self: center;
     height: 40px;
     width: 100px;
+}
+
+.result-image{
+    max-width: 150px;
+    width: 100%;
+}
+
+.result-container{
+    display: flex;
 }
