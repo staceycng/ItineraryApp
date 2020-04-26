@@ -47,8 +47,8 @@ mongoose
     .then(() => console.log("MongoDB Connected"))
     .catch(err => console.log(err));
 
-app.get('*', function (request, response) {
-    response.sendFile(path.resolve(__dirname, '../client','dist', 'index.html'))
+app.get('*', function(request, response) {
+    response.sendFile(path.resolve(__dirname, '../client', 'dist', 'index.html'))
 })
 
 
