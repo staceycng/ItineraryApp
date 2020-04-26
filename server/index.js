@@ -47,10 +47,10 @@ mongoose
     .catch(err => console.log(err));
 
 
-var certOptions = {
-    key: fs.readFileSync(path.resolve('config/server.key')),
-    cert: fs.readFileSync(path.resolve('config/server.crt'))
-}
+// var certOptions = {
+//     key: fs.readFileSync(path.resolve('config/server.key')),
+//     cert: fs.readFileSync(path.resolve('config/server.crt'))
+// }
 
 //for Heroku deployment
 if (process.env.NODE_ENV === 'production') {
