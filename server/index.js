@@ -8,7 +8,7 @@ const FacebookStrategy = require('passport-facebook')
 var https = require('https')
 var fs = require('fs')
 
-const port = process.env.port || 3000;
+const port = process.env.PORT || 3000;
 
 // server api routes
 const users = require('./routers/users.js');
@@ -38,7 +38,7 @@ app.use("/facebook", facebook);
 
 
 mongoose
-    .connect(db, {
+    .connect(process.env.MONGODB_URI || db, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useCreateIndex: true
@@ -52,24 +52,36 @@ var certOptions = {
     cert: fs.readFileSync(path.resolve('config/server.crt'))
 }
 
-/**
- * -----------Unsecure server--------------
- */
+//for Heroku deployment
+if (process.env.NODE_ENV === 'production') {
+    /**
+     * -----------Unsecure server--------------
+     */
+    app.listen(port, (err) => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(`Unsecured Server is listening on port ${port}`);
+        }
+    })
+} else {
+    /**
+     * -----------Secure server--------------
+     */
+    https.createServer(certOptions, app)
+        .listen(port, () => console.log(`Secured Server is listening on port ${port}`))
+}
 
+//if not deployed and without SSL, comment out the following code:
 // app.listen(port, (err) => {
-//     if (err) {
-//         console.log(err);
-//     } else {
-//         console.log(`Unsecured Server is listening on port ${port}`);
-//     }
+//   if (err) {
+//       console.log(err);
+//   } else {
+//       console.log(`Unsecured Server is listening on port ${port}`);
+//   }
 // })
 
 
-/**
- * -----------Secure server--------------
- */
-https.createServer(certOptions, app)
-    .listen(port, () => console.log(`Secured Server is listening on port ${port}`))
 
 
 
