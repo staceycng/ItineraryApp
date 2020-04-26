@@ -5,19 +5,22 @@ import {
     Route,
     Link,
     NavLink
-  } from "react-router-dom";
+} from "react-router-dom";
 import { connect } from "react-redux";
+
+import { logoutUser } from '../actions/auth.js';
+import { clearCurrentItinerary } from '../actions';
 
 const mapStateToProps = state => {
     return { credentials: state.auth.credentials };
 };
 
-function ConnectedHeader({ credentials }){
-    if(credentials === 'NOT_LOGGED_IN'){
-        return(
+function ConnectedHeader({ credentials, logoutUser }) {
+    if (credentials === 'NOT_LOGGED_IN') {
+        return (
             <div id='header'>
                 <div className='logo'>
-                    <NavLink to="/" style={{ textDecoration: 'none', color: "rgb(0, 153, 204)"}}>night out.</NavLink>
+                    <NavLink to="/" style={{ textDecoration: 'none', color: "rgb(0, 153, 204)" }}>night out.</NavLink>
                 </div>
                 <div className='icons'>
                     <div className='header-button'>
@@ -31,8 +34,8 @@ function ConnectedHeader({ credentials }){
             </div>
         )
     }
-    else if(credentials === 'LOGGED_IN'){
-        return(
+    else if (credentials === 'LOGGED_IN') {
+        return (
             <div id='header'>
                 <div className='logo'>
                     <NavLink to="/" style={{ textDecoration: 'none', color: "rgb(0, 153, 204)" }}>night out.</NavLink>
@@ -52,14 +55,21 @@ function ConnectedHeader({ credentials }){
                         </Link>
                         <Link to="/view-existing" style={{ textDecoration: 'none' }}>See My Itineraries</Link>
                     </div>
+                    <div className='header-button header-signed-in' onClick={logoutUser}>
+                        <Link to="/" style={{ textDecoration: 'none' }}>
+                            <i class="fas fa-user-times"></i>
+                            <div>Log Out</div>
+                        </Link>
+                        {/* <Link to="/view-existing" style={{ textDecoration: 'none' }}>Log Out</Link> */}
+                    </div>
                 </div>
             </div>
         )
     }
-    else if(credentials === 'LOGGED_IN_EDITING'){
-        
+    else if (credentials === 'LOGGED_IN_EDITING') {
+
     }
 }
 
-const Header = connect(mapStateToProps)(ConnectedHeader);
+const Header = connect(mapStateToProps, { logoutUser, clearCurrentItinerary })(ConnectedHeader);
 export default Header;

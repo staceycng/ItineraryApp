@@ -2,7 +2,7 @@ import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 
-import { SIGN_IN } from '../constants/action-types';
+import { SIGN_IN, LOG_OUT } from '../constants/action-types';
 
 
 // Register User
@@ -63,6 +63,5 @@ export const logoutUser = () => dispatch => {
     localStorage.removeItem("jwtToken");
     // Remove auth header for future requests
     setAuthToken(false);
-    // Set current user to { } which will also set isAuthenticated to false
-    dispatch(setCurrentUser({}));
+    dispatch({type: LOG_OUT});
 }

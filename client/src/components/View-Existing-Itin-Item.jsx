@@ -19,7 +19,7 @@ var itinItem = (({ itin, history }) => {
 
     var handleClick = (event) => {
         event.preventDefault();
-        history.push(`/event-editor#${itin._id}`);
+        history.push(`/event-editor/${itin._id}`);
         console.log('pushing history!');
     }
 
