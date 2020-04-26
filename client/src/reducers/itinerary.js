@@ -1,9 +1,10 @@
-import { SAVE_ITIN, SAVE_ITIN_DB, GET_ITINS, ITIN_LOADING, CLEAR_CURRENT_ITIN } from '../constants/action-types';
+import { SAVE_ITIN, SAVE_ITIN_DB, GET_ITINS,GET_ITIN, ITIN_LOADING, CLEAR_CURRENT_ITIN, GET_ITINS_INVITED } from '../constants/action-types';
 import axios from 'axios';
 
 const initialState = {
   itinerary: {},
   itineraries: null,
+  itinerariesInvited: null,
   loading: true
 };
 
@@ -15,8 +16,18 @@ function itineraryReducer(state = initialState, action) {
     //     itinerary[keys] = action.payload[keys]
     // }
     var newItin = Object.assign(state.itinerary, action.payload);
-    return Object.assign({}, state, { itinerary: newItin });
+    return Object.assign({}, state, { itinerary: newItin }, { loading: false });
   }
+
+
+  if (action.type === GET_ITIN) {
+    return {
+      ...state,
+      itinerary: action.payload,
+      loading: false
+    }
+  }
+
 
   if (action.type === GET_ITINS) {
     return {
@@ -26,10 +37,18 @@ function itineraryReducer(state = initialState, action) {
     }
   }
 
+  if (action.type === GET_ITINS_INVITED) {
+    return {
+      ...state,
+      itinerariesInvited: action.payload,
+      loading: false
+    }
+  }
+
   if (action.type === CLEAR_CURRENT_ITIN) {
     return {
       ...state,
-      itinerary: action.payload
+      itinerary: null
     }
   }
 

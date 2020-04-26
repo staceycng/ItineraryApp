@@ -37,6 +37,7 @@ app.use("/facebook", facebook);
 
 
 
+
 mongoose
     .connect(db, {
         useNewUrlParser: true,
@@ -45,6 +46,10 @@ mongoose
     })
     .then(() => console.log("MongoDB Connected"))
     .catch(err => console.log(err));
+
+app.get('*', function (request, response) {
+    response.sendFile(path.resolve(__dirname, '../client','dist', 'index.html'))
+})
 
 
 var certOptions = {
