@@ -17,7 +17,7 @@ const yelp = require('./routers/yelp.js');
 const facebook = require('./routers/facebook.js')
 
 //mongo database URI string
-const db = require('../config/keys.js').mongo_uri;
+// const db = require('../config/keys.js').mongo_uri;
 
 //passport configuration and initialization
 customStrategy(passport)
