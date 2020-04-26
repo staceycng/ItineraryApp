@@ -38,7 +38,7 @@ app.use("/facebook", facebook);
 
 
 mongoose
-    .connect(process.env.MONGODB_URI || db, {
+    .connect(process.env.MONGODB_URI || process.env.MONGO_DB, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useCreateIndex: true
