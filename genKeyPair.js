@@ -16,10 +16,14 @@ function genKeyPair() {
     });
 
     // Create the public key file
-    fs.writeFileSync(__dirname + '/config/publicKey.pem', keyPair.publicKey);
+    fs.writeFileSync(__dirname + '/publicKey.pem', keyPair.publicKey);
+    // fs.writeFileSync(__dirname + '/config/publicKey.pem', keyPair.publicKey);
+
 
     // Create the private key file
-    fs.writeFileSync(__dirname + '/config/privateKey.pem', keyPair.privateKey);
+    fs.writeFileSync(__dirname + '/privateKey.pem', keyPair.privateKey);
+    // fs.writeFileSync(__dirname + '/config/privateKey.pem', keyPair.privateKey);
+
 
 }
 
