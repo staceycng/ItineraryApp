@@ -52,10 +52,6 @@ app.get('*', function(request, response) {
 })
 
 
-// var certOptions = {
-//     key: fs.readFileSync(path.resolve('config/server.key')),
-//     cert: fs.readFileSync(path.resolve('config/server.crt'))
-// }
 
 //for Heroku deployment
 if (process.env.NODE_ENV === 'production') {
@@ -73,6 +69,11 @@ if (process.env.NODE_ENV === 'production') {
     /**
      * -----------Secure server--------------
      */
+    var certOptions = {
+        key: fs.readFileSync(path.resolve('config/server.key')),
+        cert: fs.readFileSync(path.resolve('config/server.crt'))
+    }
+
     https.createServer(certOptions, app)
         .listen(port, () => console.log(`Secured Server is listening on port ${port}`))
 }
