@@ -35,12 +35,13 @@ router.get("/invited", passport.authenticate('jwt', { session: false }), (req, r
 //@desc    Gets an Itinerary by its id
 //@access  Private
 router.get("/:itin_id", passport.authenticate('jwt', { session: false }), (req, res) => {
-    console.log(req.params.itin_id);
+    //console.log(req.params.itin_id);
     // db.find().or([{ collections: { $regex: new RegExp(keyword, 'i') } }, { type: { $regex: new RegExp(keyword, 'i') }}])
     Itinerary.findById(req.params.itin_id)
         .then(result => {
-
-            if (req.user.id === result.user || result.collaborators.includes(req.user.email)) {
+            console.log(req.user.id, result.user)
+            if (req.user.id === result.user.toString() || result.collaborators.includes(req.user.email)) {
+                console.log(result.user)
                 res.status(200).send(result)
             } else {
                 res.status(400).send({ error: "not authorized to access this itinerary" })
