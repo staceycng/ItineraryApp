@@ -36,7 +36,7 @@ class ConnectedEventWizard1 extends React.Component {
     // Get current date/time, save to local state
     componentDidMount() {
 
-        //this.props.clearCurrentItinerary();
+        this.props.clearCurrentItinerary();
 
         var currDate = new Date();
         this.setState({

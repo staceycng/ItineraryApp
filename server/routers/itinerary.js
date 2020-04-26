@@ -69,6 +69,7 @@ router.post("/", passport.authenticate('jwt', { session: false }), (req, res) =>
         Itinerary.create(newItin).then(result => {
             res.status(200).send(result);
         })
+            .catch(err => res.status(400).send(err));
     }
 });
 
@@ -84,6 +85,7 @@ router.post("/:id", passport.authenticate('jwt', { session: false }), (req, res)
         Itinerary.update({ user: req.user.id, _id: req.params.id }, req.body).then(result => {
             res.status(200).send(result);
         })
+            .catch(err => res.status(400).send(err));
     }
 });
 
