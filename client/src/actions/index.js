@@ -1,4 +1,4 @@
-import { SIGN_IN, SAVE_ITIN, SAVE_ITIN_DB, GET_ITINS, ITIN_LOADING, CLEAR_CURRENT_ITIN, GET_ITIN } from '../constants/action-types'
+import { SIGN_IN, SAVE_ITIN, SAVE_ITIN_DB, GET_ITINS, GET_ITINS_INVITED, ITIN_LOADING, CLEAR_CURRENT_ITIN, GET_ITIN } from '../constants/action-types'
 import axios from 'axios';
 
 // const headers = {
@@ -95,7 +95,7 @@ export const getItineraries = () => dispatch => {
 	.catch(err => 
 		dispatch({
 			type: GET_ITINS,
-			payload: {}
+			payload: []
 		})
 	)
 }
@@ -115,7 +115,7 @@ export const getInvitedItineraries = () => dispatch => {
 	.catch(err => 
 		dispatch({
 			type: GET_ITINS_INVITED,
-			payload: {}
+			payload: []
 		})
 	)
 }

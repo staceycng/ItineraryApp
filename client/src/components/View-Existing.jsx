@@ -2,6 +2,9 @@ import React from 'react';
 import Header from './Header.jsx';
 import { Nav } from 'react-bootstrap';
 import ItinItems from './View-Existing-Itin-Item.jsx'
+import { connect } from "react-redux";
+
+import { getItineraries, getInvitedItineraries } from '../actions';
 
 class ViewExisting extends React.Component {
     constructor(props) {
@@ -77,13 +80,36 @@ class ViewExisting extends React.Component {
         this.handleTab = this.handleTab.bind(this);
     }
 
-    handleTab(option){
+    componentDidMount() {
+        this.props.getItineraries();
+        this.props.getInvitedItineraries();
+    }
+
+    handleTab(option) {
         this.setState({
             itin: option
         })
     }
 
     render() {
+
+        let { itineraries, itinerariesInvited, loading } = this.props.itinerary;
+
+        let myItins, sharedItins;
+
+
+            if (itineraries.length > 0) {
+                myItins = itineraries.map((itin) => (<ItinItems itin={itin} />));
+            } else {
+                myItins = <h4>No itineraries found...</h4>
+            }
+
+            if (itinerariesInvited.length > 0) {
+                sharedItins = itinerariesInvited.map((itin) => (<ItinItems itin={itin} />));
+            } else {
+                sharedItins = <h4>No shared itineraries found...</h4>
+            }
+
         return (
             <div id="view-existing-container">
                 <Header />
@@ -93,14 +119,14 @@ class ViewExisting extends React.Component {
                         onSelect={(selectedKey) => this.handleTab(selectedKey)}
                     >
                         <Nav.Item>
-                            <Nav.Link style={{ textDecoration: 'none', color: "white"}} eventKey="my-itins">Your Itineraries</Nav.Link>
+                            <Nav.Link style={{ textDecoration: 'none', color: "white" }} eventKey="my-itins">Your Itineraries</Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
-                            <Nav.Link style={{ textDecoration: 'none', color: "white"}} eventKey="shared-itins">Shared Itineraries</Nav.Link>
+                            <Nav.Link style={{ textDecoration: 'none', color: "white" }} eventKey="shared-itins">Shared Itineraries</Nav.Link>
                         </Nav.Item>
                     </Nav>
                     <div id="itin-viewer">
-                        {(this.state.itin==="my-itins") ? (this.state.myItineraries.map((itin) => (<ItinItems itin={itin} />))) : (this.state.sharedItineraries.map((itin) => (<ItinItems itin={itin} />)))}
+                        {(this.state.itin === "my-itins") ? myItins : sharedItins}
                     </div>
                 </div>
             </div>
@@ -108,4 +134,8 @@ class ViewExisting extends React.Component {
     }
 }
 
-export default ViewExisting;
+const mapStateToProps = state => ({
+    itinerary: state.itinerary
+});
+
+export default connect(mapStateToProps, { getItineraries, getInvitedItineraries })(ViewExisting);
