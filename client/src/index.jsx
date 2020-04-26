@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import App from './components/App.jsx';
-import store from './store/index.js';
+import store from './store/Index.js';
 import { signIn, saveItinerary, saveItineraryDB, saveItineraryDBById } from './actions/index.js';
 import { Provider } from "react-redux";
 
