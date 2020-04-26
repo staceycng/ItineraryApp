@@ -2,8 +2,9 @@
 @import url("https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css");
 @import'~react-datepicker/dist/react-datepicker-cssmodules.css';
 @import '~@fullcalendar/core/main.css';
-@import '~@fullcalendar/daygrid/main.css';
 @import './custom.css';
+@import '~@fullcalendar/daygrid/main.css';
+@import '~@fullcalendar/timegrid/main.css';
 
 $logo-color: rgb(0, 153, 204);
 $logo-font: 'Vampiro One', cursive;

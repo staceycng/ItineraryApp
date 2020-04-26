@@ -1,13 +1,93 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import TimePicker from 'react-bootstrap-time-picker';
-import { Accordion, Card, Form, Row, Col, Button } from 'react-bootstrap';
-
+import TimePicker from 'react-time-picker';
+import { Accordion, Card, Form, Row, Col, Button, FormControl } from 'react-bootstrap';
+import { connect } from "react-redux";
 import FindEventMenu from './FindEventMenu.jsx';
+import moment from 'moment';
 
-class SidebarMenu extends React.Component {
+const mapDispatchToProps = (dispatch) => {
+    return {
+        saveItinerary: (payload) => dispatch(saveItinerary(payload))
+    };
+}
+
+const mapStateToProps = (state) => {
+    return { events: state.itinerary.itinerary.events, date: state.itinerary.itinerary.date };
+};
+
+class ConnectedSidebarMenu extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            title: '',
+            location: '',
+            startTime: "0:00",
+            endTime: "0:00",
+            notes: '',
+            events: [],
+            date: ''
+        }
+        this.handleChange = this.handleChange.bind(this);
+        this.handleTimeChange = this.handleTimeChange.bind(this);
+        this.handleEndTimeChange = this.handleEndTimeChange.bind(this);
+        this.saveEvent = this.saveEvent.bind(this);
+    }       
+
+    handleChange(event) {
+        var item = event.target.id;
+        var value = event.target.value;
+        this.setState({
+            [item]: value
+        })
+    }
+
+    handleTimeChange(startTime) {
+        this.setState({ startTime });
+    }
+
+    handleEndTimeChange(endTime) {
+        this.setState({ endTime });
+    }
+
+    saveEvent(event){
+        event.preventDefault();
+        var day = moment(this.props.date);
+        var formattedDate = day.toISOString();
+        var newEvent = {
+            title: this.state.title,
+            location: this.state.location,
+            startTime: this.state.startTime,
+            endTime: this.state.endTime,
+            notes: this.state.notes,
+            date: formattedDate
+        }
+
+        var payload = {
+            events: this.state.events
+        }
+
+        payload.events.push(newEvent);
+        console.log('payload--->', payload);
+        this.props.saveItinerary(payload);
+
+        this.setState({
+            events: payload.events,
+            title: '',
+            location: '',
+            startTime: "0:00",
+            endTime: "0:00",
+            notes: ''
+        })
+    }
+
+    componentDidMount(){
+        var events = this.props.events;
+        if(!(events)){
+            events = [];
+        }
+        this.setState({
+            events
+        })
     }
 
 
@@ -15,14 +95,6 @@ class SidebarMenu extends React.Component {
         return (
             <div id='sidebar-container' className='e-e-i default-text'>
                 <Accordion defaultActiveKey="2">
-                    <Card bg="light">
-                        <Accordion.Toggle className="c-h" as={Card.Header} eventKey="0">
-                            Import event from Facebook
-                        </Accordion.Toggle>
-                        <Accordion.Collapse eventKey="0">
-                            <Card.Body>Hello! I'm the body</Card.Body>
-                        </Accordion.Collapse>
-                    </Card>
                     <Card>
                         <Accordion.Toggle className="c-h" as={Card.Header} eventKey="1">
                             Find Event
@@ -42,22 +114,29 @@ class SidebarMenu extends React.Component {
                         <Accordion.Collapse eventKey="2">
                             <Card.Body>
                                 <Form>
-                                    <Form.Control className="c-e-f" type="text" placeholder="Event Title" />
+                                    <Form.Control className="c-e-f" type="text" id="title" placeholder="Event Title" onChange={this.handleChange} />
+                                    <Form.Control className="c-e-f" id="location" placeholder="Location" onChange={this.handleChange} />
                                     <Row>
-                                        <Col>
-                                            <Form.Control className="c-e-f" placeholder="Location" />
+                                        <Col>Start Time:
+                                            <TimePicker
+                                                onChange={this.handleTimeChange}
+                                                value={this.state.startTime} id="startTime" className="c-e-f" disableClock={true}
+                                            />
                                         </Col>
-                                        <Col>
-                                            <TimePicker className="c-e-f" start="0:00" end="23:59" step={30} />
+                                        <Col>End Time:
+                                            <TimePicker
+                                                onChange={this.handleEndTimeChange}
+                                                value={this.state.endTime} id="endTime" className="c-e-f" disableClock={true}
+                                            />
                                         </Col>
                                     </Row>
                                     <Form.Group controlId="exampleForm.ControlTextarea1">
-                                        <Form.Control className="c-e-f" placeholder="Notes/Description (Optional)" as="textarea" rows="3" />
+                                        <Form.Control className="c-e-f" id="notes" placeholder="Notes/Description (Optional)" as="textarea" rows="3" onChange={this.handleChange} />
                                     </Form.Group>
                                 </Form>
-                                <Button variant="success" type="submit" onClick={this.handleNext}>
-                                    Add!
-                            </Button>
+                                <Button variant="success" type="submit" onClick={this.saveEvent}>
+                                    Add Event!
+                                </Button>
                             </Card.Body>
                         </Accordion.Collapse>
                     </Card>
@@ -67,6 +146,7 @@ class SidebarMenu extends React.Component {
     }
 }
 
+var SidebarMenu = connect(mapStateToProps, mapDispatchToProps)(ConnectedSidebarMenu);
 export default SidebarMenu;
 
 

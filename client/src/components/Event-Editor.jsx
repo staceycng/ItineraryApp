@@ -13,7 +13,7 @@ class EventEditor extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            toggle: true
         }
     }
 
