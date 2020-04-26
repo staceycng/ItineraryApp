@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import TimePicker from 'react-bootstrap-time-picker';
-import { Accordion, Card, Form, Row, Col } from 'react-bootstrap';
+import { Accordion, Card, Form, Row, Col, Button } from 'react-bootstrap';
 
 import FindEventMenu from './FindEventMenu.jsx';
 

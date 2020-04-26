@@ -22,7 +22,7 @@ const ItinerarySchema = new Schema({
     },
     events: [
         {
-            name: {
+            title: {
                 type: String,
                 required: true
             },
@@ -32,25 +32,20 @@ const ItinerarySchema = new Schema({
             image: {
                 type: String
             },
-            time: {
-                type: Date,
-                default: Date.now
+            startTime: {
+                type: String,
+            },
+            endTime: {
+                type: String
             },
             notes: {
                 type: String
             }
         }
     ],
-    collaborators: [
-        {
-            name: {
-                type: String
-            },
-            email: {
-                type: String
-            }
-        }
-    ]
+    collaborators: {
+        type: [String]
+    }
 
 });
 

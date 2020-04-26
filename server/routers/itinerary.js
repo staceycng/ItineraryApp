@@ -21,6 +21,35 @@ router.get("/", passport.authenticate('jwt', { session: false }), (req, res) => 
         .catch(err => res.status(404).json({ notfound: "No Itinerarys were found" }));
 });
 
+//@route   GET itinerary/invited
+//@desc    Gets a users list of Itinerarys that they are invited to
+//@access  Private
+router.get("/invited", passport.authenticate('jwt', { session: false }), (req, res) => {
+    Itinerary.find({ collaborators: { $regex: new RegExp(req.user.email, 'i') } })
+        .then(result => res.status(200).send(result))
+        .catch(err => res.status(404).json({ notfound: "No Itinerarys were found" }));
+});
+
+
+//@route   GET itinerary/:itin_id
+//@desc    Gets an Itinerary by its id
+//@access  Private
+router.get("/:itin_id", passport.authenticate('jwt', { session: false }), (req, res) => {
+    console.log(req.params.itin_id);
+    // db.find().or([{ collections: { $regex: new RegExp(keyword, 'i') } }, { type: { $regex: new RegExp(keyword, 'i') }}])
+    Itinerary.findById(req.params.itin_id)
+        .then(result => {
+
+            if (req.user.id === result.user || result.collaborators.includes(req.user.email)) {
+                res.status(200).send(result)
+            } else {
+                res.status(400).send({ error: "not authorized to access this itinerary" })
+            }
+        })
+        .catch(err => res.status(404).json({ notfound: "No Itinerary was found" }));
+});
+
+
 
 //@route   POST itinerary/
 //@desc    Creates a new itinerary
@@ -56,9 +85,9 @@ router.post("/:id", passport.authenticate('jwt', { session: false }), (req, res)
 //@desc    Deletes an itinerary by its ID
 //@access  Private
 router.delete("/:id", passport.authenticate('jwt', { session: false }), (req, res) => {
-    Itinerary.deleteOne({ _id: req.params.id, user: req.user.id }).then(result => {
-            res.status(200).send(result);
-        })
+    Itinerary.findOneAndDelete({ _id: req.params.id, user: req.user.id }).then(result => {
+        res.status(200).send(result);
+    })
         .catch(err => {
             res.status(400).send(err);
         })
@@ -73,25 +102,27 @@ router.post("/event/:id", passport.authenticate('jwt', { session: false }), (req
     //if (!isValid) {
     //    res.status(400).send(errors);
     //} else {
-        const newEvent = {
-            name: req.body.name,
-            location: req.body.location,
-            image: req.body.image,
-            time: req.body.time,
-            notes: req.body.notes
-        }
+    const newEvent = {
+        title: req.body.title,
+        location: req.body.location,
+        image: req.body.image,
+        startTime: req.body.start,
+        endTime: req.body.end,
+        notes: req.body.notes
+    }
 
-        Itinerary.update({ user: req.user.id, _id: req.params.id }, { $push: { events: newEvent } })
-            .then(result => res.status(200).send(result))
-            .catch(err => res.status(400).send(err));
+    Itinerary.findOneAndUpdate({ $or: [{ user: req.user.id, _id: req.params.id }, { _id: req.params.id, collaborators: { $regex: new RegExp(req.user.email, 'i') } }] }, { $push: { events: newEvent } })
+        //Itinerary.update({ user: req.user.id, _id: req.params.id }, { $push: { events: newEvent } })
+        .then(result => res.status(200).send(result))
+        .catch(err => res.status(400).send(err));
     //}
 });
 
-//@route   DELETE itinerary/event/:id
+//@route   DELETE itinerary/event/:id/:event_id
 //@desc    Deletes an event in an itinerary by its ID
 //@access  Private
 router.delete("/event/:id/:event_id", passport.authenticate('jwt', { session: false }), (req, res) => {
-    Itinerary.update({ user: req.user.id, _id: req.params.id }, { $pull: { events: req.params.event_id } })
+    Itinerary.findOneAndUpdate({ $or: [{ user: req.user.id, _id: req.params.id }, { _id: req.params.id, collaborators: { $regex: new RegExp(req.user.email, 'i') } }] }, { $pull: { events: { _id: req.params.event_id } } })
         .then(result => res.status(200).send(result))
         .catch(err => res.status(400).send(err));
 });
