@@ -52,10 +52,10 @@ app.get('*', function (request, response) {
 })
 
 
-var certOptions = {
-    key: fs.readFileSync(path.resolve('config/server.key')),
-    cert: fs.readFileSync(path.resolve('config/server.crt'))
-}
+// var certOptions = {
+//     key: fs.readFileSync(path.resolve('config/server.key')),
+//     cert: fs.readFileSync(path.resolve('config/server.crt'))
+// }
 
 /**
  * -----------Unsecure server--------------
