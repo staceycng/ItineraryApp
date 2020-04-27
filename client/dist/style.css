@@ -270,4 +270,29 @@
   display: flex;
 }
 
+.toast {
+  z-index: 5;
+  position: absolute;
+  top: 15%;
+  height: max-content;
+}
+
+.toast-header {
+  font-family: "Glegoo", serif;
+  font-size: 14px;
+  float: right;
+  width: 100%;
+  border: none;
+  margin-bottom: 5px;
+}
+
+.toast-body {
+  padding-top: 10px;
+}
+
+.toast-message {
+  margin-top: 5px;
+  font-size: 12px;
+}
+
 /*# sourceMappingURL=style.css.map */

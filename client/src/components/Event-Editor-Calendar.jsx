@@ -2,6 +2,8 @@ import React from 'react'
 import FullCalendar from '@fullcalendar/react'
 import timeGridPlugin from '@fullcalendar/timegrid';
 import bootstrapPlugin from '@fullcalendar/bootstrap';
+import interactionPlugin from '@fullcalendar/interaction';
+import { Toast } from 'react-bootstrap';
 import { connect } from "react-redux";
 import moment from 'moment';
 
@@ -16,30 +18,39 @@ class ConnectedCalendar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            events: []
+            events: [],
+            title: '',
+            location: '',
+            description: '',
+            showToast: false
         }
+        this.handleDateClick = this.handleDateClick.bind(this);
+        this.toggleToast = this.toggleToast.bind(this);
     }
 
-    // componentDidUpdate(prevProps, prevState){
-    //     console.log('prevProps--->', prevProps.events);
-    //     console.log('prevState--->', prevState.events);
-    //     console.log('currProps-->', this.props.events);
-    //     console.log('currState-->', this.state.events);
+    toggleToast(){
+        this.setState({
+            showToast: !(this.state.showToast)
+        })
+    }
 
-    //     var propsStr = JSON.stringify(this.props.events);
-    //     var prevStateStr = JSON.stringify(prevState.events);
+    handleDateClick(arg) {
+        var event = arg.event;
 
-    //     if(propsStr !== prevStateStr){
-    //         console.log('No match!');
-    //         this.setState({
-    //             events: this.props.events
-    //         })
-    //     }
+        var title = event.title;
+        var location = event.extendedProps.location;
+        var description = event.extendedProps.notes;
 
-    // }
+        this.setState({
+            title,
+            location,
+            description,
+            showToast: true
+        }, () => { console.log(this.state) });
+    }
 
-    static getDerivedStateFromProps(props, state){
-        return {events: props.events}
+    static getDerivedStateFromProps(props, state) {
+        return { events: props.events }
     }
 
     componentDidMount() {
@@ -59,17 +70,17 @@ class ConnectedCalendar extends React.Component {
         var day = moment(this.props.date);
         var formattedDate = day.toISOString();
         var newEvents;
-        if(this.state.events){
+        if (this.state.events) {
             newEvents = [...this.state.events];
         }
-        else{
+        else {
             newEvents = [];
         }
         return (
             <div id="calendar" className="e-e-i">
                 <FullCalendar id="calendar-module"
                     defaultView="timeGridDay"
-                    plugins={[timeGridPlugin, bootstrapPlugin]}
+                    plugins={[timeGridPlugin, bootstrapPlugin, interactionPlugin]}
                     themeSystem={'bootstrap'}
                     height={750}
                     aspectRatio={0.5}
@@ -77,7 +88,19 @@ class ConnectedCalendar extends React.Component {
                     defaultDate={formattedDate}
                     allDaySlot={false}
                     events={newEvents}
+                    eventClick={this.handleDateClick}
                 />
+                <Toast show={this.state.showToast} onClose={this.toggleToast}>
+                    <Toast.Header>
+                        <img src="holder.js/20x20?text=%20" className="rounded mr-2" alt="" />
+                        <strong className="toast-header">More About This Event!</strong>
+                    </Toast.Header>
+                    <Toast.Body>
+                        <div className='toast-message'><b>Event:</b> {this.state.title}</div>
+                        <div className='toast-message'><b>Location:</b> {this.state.location}</div>
+                        <div className='toast-message'><b>Event Description:</b> {this.state.description}</div>
+                    </Toast.Body>
+                </Toast>
             </div>
         )
     }
