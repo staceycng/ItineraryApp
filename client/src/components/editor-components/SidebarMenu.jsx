@@ -60,7 +60,8 @@ class ConnectedSidebarMenu extends React.Component {
             startTime: this.state.startTime,
             endTime: this.state.endTime,
             notes: this.state.notes,
-            date: formattedDate
+            date: formattedDate,
+            votes: []
         }
 
         var payload = {
