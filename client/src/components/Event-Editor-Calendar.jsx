@@ -20,26 +20,29 @@ class ConnectedCalendar extends React.Component {
         }
     }
 
-    componentDidUpdate(prevProps, prevState){
-        console.log('prevProps--->', prevProps.events);
-        console.log('prevState--->', prevState.events);
-        console.log('currProps-->', this.props.events);
-        console.log('currState-->', this.state.events);
+    // componentDidUpdate(prevProps, prevState){
+    //     console.log('prevProps--->', prevProps.events);
+    //     console.log('prevState--->', prevState.events);
+    //     console.log('currProps-->', this.props.events);
+    //     console.log('currState-->', this.state.events);
 
-        var propsStr = JSON.stringify(this.props.events);
-        var prevStateStr = JSON.stringify(prevState.events);
+    //     var propsStr = JSON.stringify(this.props.events);
+    //     var prevStateStr = JSON.stringify(prevState.events);
 
-        if(propsStr !== prevStateStr){
-            console.log('No match!');
-            this.setState({
-                events: this.props.events
-            })
-        }
+    //     if(propsStr !== prevStateStr){
+    //         console.log('No match!');
+    //         this.setState({
+    //             events: this.props.events
+    //         })
+    //     }
 
+    // }
+
+    static getDerivedStateFromProps(props, state){
+        return {events: props.events}
     }
 
     componentDidMount() {
-        console.log('Mounting!', this.props.events);
         var newEvents;
         if (this.props.events !== undefined) {
             newEvents = this.props.events;
@@ -55,6 +58,13 @@ class ConnectedCalendar extends React.Component {
     render() {
         var day = moment(this.props.date);
         var formattedDate = day.toISOString();
+        var newEvents;
+        if(this.state.events){
+            newEvents = [...this.state.events];
+        }
+        else{
+            newEvents = [];
+        }
         return (
             <div id="calendar" className="e-e-i">
                 <FullCalendar id="calendar-module"
@@ -66,7 +76,7 @@ class ConnectedCalendar extends React.Component {
                     handleWindowResize={true}
                     defaultDate={formattedDate}
                     allDaySlot={false}
-                    events={this.state.events}
+                    events={newEvents}
                 />
             </div>
         )

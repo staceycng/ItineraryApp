@@ -10,7 +10,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        saveItinerary: (payload) => dispatch(saveItinerary(payload))
+        saveItinerary: (payload) => dispatch(saveItinerary(payload)),
+        addEvent: (payload) => dispatch(addEvent(payload))
     };
 }
 
@@ -42,15 +43,25 @@ function ConnectedEventResults(props) {
         // console.log('start-->', startTime);
         // console.log('end-->', endTime);
 
-
+        var completeLocation = `${location.display_address[0]} ${location.display_address[1]}`
+        
         var newEvent = {
             title: name,
-            location: location,
+            location: completeLocation,
+            image: image_url,
             notes: description,
             startTime: startTime,
-            endTime: endTime,
-            date: props.start
+            endTime: endTime
         }
+        
+        console.log('newEvent--->', newEvent);
+        var payload = {
+            events: props.events
+        }
+        console.log('payload--->', payload);
+
+        payload.events.push(newEvent);
+        props.addEvent(newEvent, payload)
 
     }
 
@@ -74,5 +85,5 @@ function ConnectedEventResults(props) {
     )
 }
 
-var EventResults = connect(mapStateToProps)(ConnectedEventResults);
+var EventResults = connect(mapStateToProps, mapDispatchToProps)(ConnectedEventResults);
 export default EventResults;
