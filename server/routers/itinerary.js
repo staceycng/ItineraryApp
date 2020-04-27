@@ -101,7 +101,7 @@ router.post("/", passport.authenticate('jwt', { session: false }), (req, res) =>
 //@desc    Updates an existing itinerary by its id
 //@access  Private
 router.post("/:id", passport.authenticate('jwt', { session: false }), (req, res) => {
-    let { errors, isValid } = validateItineraryInput(req.body);
+    // let { errors, isValid } = validateItineraryInput(req.body);
 
     if (!isValid) {
         res.status(400).send(errors);

@@ -138,12 +138,15 @@ export const getInvitedItineraries = () => dispatch => {
 // Add Event
 export const addEvent = (event, payload, history) => (dispatch, getState) => {
     var _id = getState().itinerary.itinerary._id;
-    console.log('id---->', _id);
-    axios.post(`/itinerary/event/${_id}`, event)
+	console.log('id---->', _id);
+	console.log("payload ---> ", payload)
+	console.log("event ---> ", event)
+	axios.post(`/itinerary/event/${_id}`, event)
     .then(res =>
         dispatch({
-            type: SAVE_ITIN,
-            payload: payload
+			type: SAVE_ITIN,
+			payload: res.data
+            //payload: payload
         }))
     .catch(err => {
     alert("Event could not be added");
