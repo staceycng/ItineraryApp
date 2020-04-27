@@ -10,7 +10,7 @@ import moment from 'moment';
 import '../../dist/style.scss'
 
 const mapStateToProps = state => {
-    return { events: state.itinerary.itinerary.events, date: state.itinerary.itinerary.date };
+    return { events: state.itinerary.itinerary.events, start: state.itinerary.itinerary.start };
 
 };
 
@@ -67,8 +67,9 @@ class ConnectedCalendar extends React.Component {
     }
 
     render() {
-        var day = moment(this.props.date);
+        var day = moment(this.props.start);
         var formattedDate = day.toISOString();
+        console.log('formatted--->', formattedDate);
         var newEvents;
         if (this.state.events) {
             newEvents = [...this.state.events];
