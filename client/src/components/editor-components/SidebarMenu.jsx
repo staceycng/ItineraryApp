@@ -13,7 +13,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const mapStateToProps = (state) => {
-    return { events: state.itinerary.itinerary.events, date: state.itinerary.itinerary.date, _id: state.itinerary.itinerary._id };
+    return { events: state.itinerary.itinerary.events, start: state.itinerary.itinerary.start, _id: state.itinerary.itinerary._id };
 };
 
 class ConnectedSidebarMenu extends React.Component {
@@ -26,7 +26,7 @@ class ConnectedSidebarMenu extends React.Component {
             endTime: "13:00",
             notes: '',
             events: [],
-            date: ''
+            start: ''
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleTimeChange = this.handleTimeChange.bind(this);
@@ -52,7 +52,7 @@ class ConnectedSidebarMenu extends React.Component {
 
     saveEvent(event){
         event.preventDefault();
-        var day = moment(this.props.date);
+        var day = moment(this.props.start);
         var formattedDate = day.toISOString();
         var newEvent = {
             title: this.state.title,
@@ -60,7 +60,7 @@ class ConnectedSidebarMenu extends React.Component {
             startTime: this.state.startTime,
             endTime: this.state.endTime,
             notes: this.state.notes,
-            date: formattedDate,
+            start: formattedDate,
             votes: []
         }
 
@@ -69,6 +69,9 @@ class ConnectedSidebarMenu extends React.Component {
         }
 
         payload.events.push(newEvent);
+
+        console.log("sidebar payload --->", payload);
+
         this.props.addEvent(newEvent, payload)
         // this.props.saveItinerary(payload);
 

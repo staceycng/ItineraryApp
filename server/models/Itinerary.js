@@ -23,8 +23,7 @@ const ItinerarySchema = new Schema({
     events: [
         {
             title: {
-                type: String,
-                required: true
+                type: String
             },
             location: {
                 type: String,
