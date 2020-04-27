@@ -12,6 +12,7 @@ import '../../dist/style.scss'
 import { addVote, deleteVote } from '../actions';
 
 const mapStateToProps = state => {
+
     return {
         events: state.itinerary.itinerary.events,
         start: state.itinerary.itinerary.start,
@@ -109,6 +110,7 @@ class ConnectedCalendar extends React.Component {
     render() {
         var day = moment(this.props.start);
         var formattedDate = day.toISOString();
+        console.log('formatted--->', formattedDate);
         var newEvents;
         if (this.state.events) {
             newEvents = [...this.state.events];

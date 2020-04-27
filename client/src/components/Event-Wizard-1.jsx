@@ -25,7 +25,7 @@ class ConnectedEventWizard1 extends React.Component {
         super(props);
         this.state = {
             name: null,
-            date: null
+            start: null
         }
         this.handleDateChange = this.handleDateChange.bind(this);
         this.handleSave = this.handleSave.bind(this);
@@ -40,14 +40,14 @@ class ConnectedEventWizard1 extends React.Component {
 
         var currDate = new Date();
         this.setState({
-            date: currDate
+            start: currDate
         });
     }
 
     // Change local state based on user date/time selection
     handleDateChange(date) {
         this.setState({
-            date: date
+            start: date
         });
     }
 
@@ -94,7 +94,7 @@ class ConnectedEventWizard1 extends React.Component {
                         <Form.Group controlId="formBasicItineraryDate">
                             <Form.Label><h3>Start date and time?</h3></Form.Label>
                             <DatePicker
-                                selected={this.state.date}
+                                selected={this.state.start}
                                 onChange={this.handleDateChange}
                                 showTimeSelect
                                 dateFormat="Pp"

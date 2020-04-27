@@ -19,9 +19,10 @@ class ConnectedCalendar extends React.Component {
 
     componentDidMount() {
         if (this.props.match.params.itin_id) {
-            axios.get(`/itinerary/public/${this.props.match.params.itin_id}`)
+            axios.get(`/itinerary/${this.props.match.params.itin_id}`)
                 .then(res => {
                     let newEvents = res.data.events;
+                    console.log('res!--->', res);
                     this.setState({ events: newEvents, title: res.data.name })
                 })
                 .catch(err => console.log(err))
@@ -32,8 +33,8 @@ class ConnectedCalendar extends React.Component {
         var day = moment(this.props.date);
         var formattedDate = day.toISOString();
         return (
-            <div id="calendar" className="e-e-i">
-            <h1>{this.state.title}</h1>
+            <div id="calendar-export" className="e-e-i">
+            <h3>{this.state.title}</h3>
                 <FullCalendar id="calendar-module"
                     defaultView="timeGridDay"
                     plugins={[timeGridPlugin, bootstrapPlugin]}
