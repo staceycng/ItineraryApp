@@ -40,7 +40,18 @@ const ItinerarySchema = new Schema({
             },
             notes: {
                 type: String
-            }
+            },
+            votes: [
+                {
+                    user: {
+                        type: Schema.Types.ObjectId,
+                        ref: "users"
+                    },
+                    vote: {
+                        type: Boolean
+                    }
+                }
+            ]
         }
     ],
     collaborators: {

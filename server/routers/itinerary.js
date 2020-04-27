@@ -21,7 +21,7 @@ router.get("/public/:itin_id", (req, res) => {
     Itinerary.findById(req.params.itin_id, 'events name').then(result => {
         res.status(200).send(result);
     })
-    .catch(err => res.status(404).send({ notfound: "No Itinerary was found" }));
+        .catch(err => res.status(404).send({ notfound: "No Itinerary was found" }));
     // Itinerary.findById(req.params.itin_id)
     //     .then(result => {
     //         console.log(req.user.id, result.user)
@@ -159,5 +159,76 @@ router.delete("/event/:id/:event_id", passport.authenticate('jwt', { session: fa
         .then(result => res.status(200).send(result))
         .catch(err => res.status(400).send(err));
 });
+
+
+
+//@route   POST itinerary/vote/:itin_id/:event_id
+//@desc    creates a new vote in an event in an itinerary
+//@access  Private
+router.post("/vote/:itin_id/:event_id", passport.authenticate('jwt', { session: false }), (req, res) => {
+    
+    Itinerary.findOne({ $or: [{ user: req.user.id, _id: req.params.itin_id }, { _id: req.params.itin_id, collaborators: { $regex: new RegExp(req.user.email, 'i') } }] })
+    
+        .then(result => {
+            let newVote = {
+                user: req.user.id,
+                vote: req.body.vote
+            }
+
+            let eventIndex = result.events.findIndex(event => event._id.toString() === req.params.event_id.toString());
+            //console.log()
+            if (eventIndex !== -1) {
+                if (result.events[eventIndex].votes.filter(vote => vote.user.toString() === req.user.id && vote.vote === newVote.vote).length > 0) {
+                    res.status(400).send({ alreadyvoted: `User already voted ${newVote.vote} on this post` });
+                } else {
+                    //Add vote to the votes array   
+                    result.events[eventIndex].votes.unshift(newVote);
+                    result.save().then(itin => res.send(itin));
+                }
+            } else {
+                res.status(400).send({error: "event not found"})
+            }
+
+        })
+        .catch(err => res.status(400).send(err));
+
+});
+
+
+
+//@route   DELETE itinerary/vote/:itin_id/:event_id
+//@desc    deletes a vote in an event in an itinerary
+//@access  Private
+router.delete("/vote/:itin_id/:event_id", passport.authenticate('jwt', { session: false }), (req, res) => {
+    
+    Itinerary.findOne({ $or: [{ user: req.user.id, _id: req.params.itin_id }, { _id: req.params.itin_id, collaborators: { $regex: new RegExp(req.user.email, 'i') } }] })
+    
+        .then(result => {
+            let voteType = req.body.vote;
+
+            let eventIndex = result.events.findIndex(event => event._id.toString() === req.params.event_id.toString());
+            //console.log()
+            if (eventIndex !== -1) {
+
+                let removeIndex = result.events[eventIndex].votes.findIndex(vote => vote.user.toString() === req.user.id && vote.vote === voteType)
+
+                if (removeIndex !== -1) {
+
+                    //Add vote to the votes array   
+                    result.events[eventIndex].votes.splice(removeIndex, 1);
+                    result.save().then(itin => res.send(itin));        
+                } else {
+                    res.status(400).send({ alreadyvoted: `User has not voted ${newVote.vote} on this post` });
+                }
+            } else {
+                res.status(400).send({error: "event not found"})
+            }
+
+        })
+        .catch(err => res.status(400).send(err));
+
+});
+
+
 
 module.exports = router;
