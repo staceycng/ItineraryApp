@@ -17,6 +17,11 @@ class EventEditor extends React.Component {
         }
     }
 
+    componentDidUpdate(){
+        console.log('Editor has been updated!');
+        console.log('State--->', this.state.itinerary);
+    }
+
     componentDidMount() {
 
         //let { itin_id } = useParams();
@@ -25,39 +30,22 @@ class EventEditor extends React.Component {
         if (this.props.match.params.itin_id) {
             this.props.getItineraryById(this.props.match.params.itin_id);
         }
+
+        this.setState({
+            itinerary: this.props.itinerary
+        })
     }
 
-    // componentWillReceiveProps(nextProps) {
-    //     if (nextProps.profile.profile === null && this.props.profile.loading) {
-    //         this.props.history.push("/not-found");
-    //     }
-    // }
-
-    // componentDidUpdate(prevProps, prevState, snapshot){
-    //     var currProps = this.state;
-        
-    //     var stringCurr = JSON.stringify(currProps.itinerary);
-    //     var stringPrev = JSON.stringify(prevProps.itinerary.itinerary);
-    //     console.log('currState-->', stringCurr);
-    //     console.log('prevProps--->', stringPrev);
-
-    //     if(stringCurr === stringPrev){
-    //         console.log('Props are the same!');
-    //     }
-    //     else if ((stringCurr !== stringPrev) || (stringPrev === undefined)){
-    //         console.log('Props not the same, update!!!!!!');
-    //         this.setState({
-    //             itinerary: this.props.itinerary.itinerary
-    //         })
-    //     }
-    // }
 
     render() {
+        console.log('Editor is re-rendering!');
 
         let { loading, itinerary } = this.props.itinerary;
 
         console.log(loading);
         console.log(itinerary);
+
+        var newEvents = {...this.state.itinerary};
 
         return (
             <div id='e-e-c'>
@@ -66,7 +54,7 @@ class EventEditor extends React.Component {
                 {itinerary === null || loading ? <Spinner animation="grow" variant="primary" /> : (
                     <div id='event-editor'>
                         <SidebarMenu />
-                        <EventEditorCalendar itinerary={itinerary}/>
+                        <EventEditorCalendar itinerary={newEvents}/>
                     </div>
                 )}
 
