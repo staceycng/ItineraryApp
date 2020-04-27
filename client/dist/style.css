@@ -180,20 +180,25 @@
 }
 
 .itin-item {
-  display: inline-block;
-  width: 40%;
+  width: 420px;
   height: max-content;
   padding: 30px;
   background-color: white;
   font-family: "Glegoo", serif;
-  margin: 15px;
   border-radius: 5px;
+  margin-bottom: 5px;
 }
 
 .itin-item:hover {
   background-color: #605f5e;
   color: white;
   cursor: pointer;
+}
+
+.itin-item-list {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
 }
 
 .v-e-nav {
@@ -293,6 +298,10 @@
 .toast-message {
   margin-top: 5px;
   font-size: 12px;
+}
+
+#calendar-export {
+  margin: 20px;
 }
 
 /*# sourceMappingURL=style.css.map */
