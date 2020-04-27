@@ -12,6 +12,30 @@ router.get("/test", passport.authenticate('jwt', { session: false }), (req, res)
 });
 
 
+//@route   GET itinerary/public/:itin_id
+//@desc    Gets an Itinerary's events by id for public viewing
+//@access  public
+router.get("/public/:itin_id", (req, res) => {
+
+
+    Itinerary.findById(req.params.itin_id, 'events name').then(result => {
+        res.status(200).send(result);
+    })
+    .catch(err => res.status(404).send({ notfound: "No Itinerary was found" }));
+    // Itinerary.findById(req.params.itin_id)
+    //     .then(result => {
+    //         console.log(req.user.id, result.user)
+    //         if (req.user.id === result.user.toString() || result.collaborators.includes(req.user.email)) {
+    //             console.log(result.user)
+    //             res.status(200).send(result)
+    //         } else {
+    //             res.status(400).send({ error: "not authorized to access this itinerary" })
+    //         }
+    //     })
+    //     .catch(err => res.status(404).json({ notfound: "No Itinerary was found" }));
+});
+
+
 //@route   GET itinerary/
 //@desc    Gets a users list of Itinerarys by their userID
 //@access  Private
@@ -19,7 +43,7 @@ router.get("/", passport.authenticate('jwt', { session: false }), (req, res) => 
     Itinerary.find({ user: req.user.id })
         .populate("user", ["name"])
         .then(result => res.status(200).send(result))
-        .catch(err => res.status(404).json({ notfound: "No Itinerarys were found" }));
+        .catch(err => res.status(404).send({ notfound: "No Itineraries were found" }));
 });
 
 //@route   GET itinerary/invited
@@ -29,7 +53,7 @@ router.get("/invited", passport.authenticate('jwt', { session: false }), (req, r
     Itinerary.find({ collaborators: { $regex: new RegExp(req.user.email, 'i') } })
         .populate("user", ["name"])
         .then(result => res.status(200).send(result))
-        .catch(err => res.status(404).json({ notfound: "No Itinerarys were found" }));
+        .catch(err => res.status(404).send({ notfound: "No Itineraries were found" }));
 });
 
 
@@ -49,7 +73,7 @@ router.get("/:itin_id", passport.authenticate('jwt', { session: false }), (req, 
                 res.status(400).send({ error: "not authorized to access this itinerary" })
             }
         })
-        .catch(err => res.status(404).json({ notfound: "No Itinerary was found" }));
+        .catch(err => res.status(404).send({ notfound: "No Itinerary was found" }));
 });
 
 

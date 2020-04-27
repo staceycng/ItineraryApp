@@ -14,7 +14,11 @@ let store;
 // } else {
     store = createStore(rootReducer, initialState, compose(applyMiddleware(thunk), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()));
 
+<<<<<<< HEAD
+//}
+=======
 // }
+>>>>>>> 61607c8b67824ccc34f0d95770a0d8e177c4c735
 
 
 export default store;

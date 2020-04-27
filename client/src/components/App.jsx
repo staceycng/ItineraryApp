@@ -6,6 +6,8 @@ import SignUp from './Sign-Up.jsx';
 import EventWizard from './Event-Wizard.jsx';
 import EventEditor from './Event-Editor.jsx';
 import ViewExisting from './View-Existing.jsx';
+import PublicViewer from './public-viewer/PublicViewer.jsx'
+
 import {
     BrowserRouter as Router,
     Switch,
@@ -73,6 +75,7 @@ class App extends React.Component {
                             <EventWizard />
                         </Route>
                         <Route exact path="/event-editor/:itin_id" component={EventEditor} />
+                        <Route exact path="/public/:itin_id" component={PublicViewer} />
                         <Route path="/view-existing">
                             <ViewExisting />
                         </Route>
