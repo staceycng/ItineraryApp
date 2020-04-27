@@ -22,8 +22,8 @@ class ConnectedSidebarMenu extends React.Component {
         this.state = {
             title: '',
             location: '',
-            startTime: "0:00",
-            endTime: "0:00",
+            startTime: "11:00",
+            endTime: "13:00",
             notes: '',
             events: [],
             date: ''

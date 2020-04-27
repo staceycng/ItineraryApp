@@ -279,3 +279,28 @@ $muted-body-color: rgb(82, 165, 230);
 .result-container{
     display: flex;
 }
+
+.toast{
+    z-index: 5;
+    position: absolute;
+    top: 15%;
+    height: max-content;
+}
+
+.toast-header{
+    font-family: $body-font;
+    font-size: 14px;
+    float: right;
+    width: 100%;
+    border: none;
+    margin-bottom: 5px;
+}
+
+.toast-body{
+    padding-top: 10px;
+}
+
+.toast-message{
+    margin-top: 5px;
+    font-size: 12px;
+}
