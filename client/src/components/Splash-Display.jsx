@@ -9,7 +9,7 @@ function SplashDisplay(props){
                 <div className='page-body-caption page-body-text'>Seamless collaborative planning for your next night out.</div>
             </div>
             <div className='page-body-right'>
-                <img className='page-body-image' src="https://mvp-assets.s3-us-west-1.amazonaws.com/PngItem_2262337.png"></img>
+                <img className='page-body-image' src="https://mvp-assets.s3-us-west-1.amazonaws.com/PngItem_2262337+(1).png"></img>
             </div>
         </div>
     )
